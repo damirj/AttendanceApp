@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/marginLarge"
+        android:paddingEnd="@dimen/marginLarge"
+        android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/newCourseHeading"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            style="@style/HeadingTextView"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:text="Novi kolegij"/>
+
+    <EditText
+            android:id="@+id/newCourseTitleInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/naziv_kolegija"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:inputType="text"
+            tools:ignore="Autofill"/>
+
+    <EditText
+            android:id="@+id/newCourseLectureInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/broj_predavanja"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:inputType="number"
+            tools:ignore="Autofill"/>
+
+    <EditText
+            android:id="@+id/newCourseExerciseInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/broj_auditornih"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:inputType="number"
+            tools:ignore="Autofill"/>
+
+    <EditText
+            android:id="@+id/newCourseLaboratoryInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/broj_labosa"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:inputType="number"
+            tools:ignore="Autofill"/>
+
+    <EditText
+            android:id="@+id/newCoursePercentageInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Postotak dolaznosti"
+            android:text="70"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:inputType="numberDecimal"
+            tools:ignore="Autofill"/>
+
+    <Button
+            android:id="@+id/saveCourseAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginLarge"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:layout_gravity="center"
+            android:text="@string/spremi"/>
+
+</LinearLayout>
