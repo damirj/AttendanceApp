@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             style="@style/HeadingTextView"
             android:layout_marginBottom="@dimen/marginLarge"
-            android:text="Ime kolegija"/>
+            android:text="@string/course_name"/>
 
     <RadioGroup
             android:id="@+id/btnGroup"
@@ -26,14 +26,14 @@
                 android:id="@+id/btnMissed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Propustio"
+                android:text="@string/missed"
                 android:layout_weight="1"/>
 
         <RadioButton
                 android:id="@+id/btnAttend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bio"
+                android:text="@string/attended"
                 android:layout_weight="1"/>
 
     </RadioGroup>
@@ -42,7 +42,7 @@
             android:id="@+id/numOfHours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Broj sati"
+            android:hint="@string/number_of_hours"
             android:layout_marginBottom="@dimen/marginLarge"
             android:inputType="number"
             tools:ignore="Autofill"/>
@@ -54,6 +54,6 @@
             android:layout_marginTop="@dimen/marginLarge"
             android:layout_marginBottom="@dimen/marginLarge"
             android:layout_gravity="center"
-            android:text="@string/spremi"/>
+            android:text="@string/save"/>
 
 </LinearLayout>

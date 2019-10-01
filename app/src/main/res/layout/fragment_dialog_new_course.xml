@@ -14,13 +14,13 @@
             android:layout_width="match_parent"
             style="@style/HeadingTextView"
             android:layout_marginBottom="@dimen/marginLarge"
-            android:text="Novi kolegij"/>
+            android:text="@string/new_course"/>
 
     <EditText
             android:id="@+id/newCourseTitleInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/naziv_kolegija"
+            android:hint="@string/course_name"
             android:layout_marginBottom="@dimen/marginLarge"
             android:inputType="text"
             tools:ignore="Autofill"/>
@@ -29,7 +29,7 @@
             android:id="@+id/newCourseLectureInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/broj_predavanja"
+            android:hint="@string/num_of_lectures"
             android:layout_marginBottom="@dimen/marginLarge"
             android:inputType="number"
             tools:ignore="Autofill"/>
@@ -38,7 +38,7 @@
             android:id="@+id/newCourseExerciseInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/broj_auditornih"
+            android:hint="@string/num_of_exercises"
             android:layout_marginBottom="@dimen/marginLarge"
             android:inputType="number"
             tools:ignore="Autofill"/>
@@ -47,7 +47,7 @@
             android:id="@+id/newCourseLaboratoryInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/broj_labosa"
+            android:hint="@string/num_of_lab"
             android:layout_marginBottom="@dimen/marginLarge"
             android:inputType="number"
             tools:ignore="Autofill"/>
@@ -56,7 +56,7 @@
             android:id="@+id/newCoursePercentageInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Postotak dolaznosti"
+            android:hint="@string/attendance_percentage"
             android:text="70"
             android:layout_marginBottom="@dimen/marginLarge"
             android:inputType="numberDecimal"
@@ -69,6 +69,6 @@
             android:layout_marginTop="@dimen/marginLarge"
             android:layout_marginBottom="@dimen/marginLarge"
             android:layout_gravity="center"
-            android:text="@string/spremi"/>
+            android:text="@string/save"/>
 
 </LinearLayout>
