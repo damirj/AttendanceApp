@@ -4,11 +4,17 @@ import hr.damirjurkovic.attendance.model.Course
 
 interface RepositoryInterface {
 
-    fun getAllCourses():List<Course>
+    fun getAllCourses(): MutableList<Course>
 
-    fun insertCourse(course: Course)
+    fun insertCourse(course: Course): Course
 
-    fun updateAttendanceState(courseId: Int, leftHoursQuota: Double, wentHours: Double, leftHoursAll: Double, alarmState: Double)
+    fun updateAttendanceState(
+        courseId: Int,
+        leftHoursQuota: Double,
+        wentHours: Double,
+        leftHoursAll: Double,
+        alarmState: Double
+    )
 
     fun deleteCourse(course: Course)
 

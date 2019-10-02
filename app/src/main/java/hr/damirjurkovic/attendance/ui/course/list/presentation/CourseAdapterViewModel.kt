@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.persistence.RepositoryInterface
 
-
-class CourseListViewModel(private val repository: RepositoryInterface) : ViewModel() {
+class CourseAdapterViewModel(private val repository: RepositoryInterface) : ViewModel() {
 
     private val _coursesLiveData = MutableLiveData<MutableList<Course>>()
     val coursesLiveData: LiveData<MutableList<Course>>
@@ -15,12 +14,6 @@ class CourseListViewModel(private val repository: RepositoryInterface) : ViewMod
 
     init {
         loadCourses()
-    }
-
-    fun addCourse(course: Course) {
-        repository.insertCourse(course).also {
-            _coursesLiveData.value?.add(it)
-        }
     }
 
     fun deleteAllCourses(){
@@ -34,7 +27,11 @@ class CourseListViewModel(private val repository: RepositoryInterface) : ViewMod
         }
     }
 
-    private fun loadCourses() {
+    fun getSize(): Int {
+        return _coursesLiveData.value?.size
+    }
+
+    fun loadCourses() {
         _coursesLiveData.value = repository.getAllCourses()
     }
 }

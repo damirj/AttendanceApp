@@ -10,9 +10,13 @@ import androidx.fragment.app.DialogFragment
 import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.displayToast
+import hr.damirjurkovic.attendance.ui.course.list.presentation.CourseListViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_new_course.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class AddCourseDialogFragment(private val onCourseCreated: (Course) -> Unit) : DialogFragment() {
+class AddCourseDialogFragment : DialogFragment() {
+
+    private val viewModel: CourseListViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,7 +69,7 @@ class AddCourseDialogFragment(private val onCourseCreated: (Course) -> Unit) : D
                 leftHoursAll = leftHoursAll,
                 alarmState = leftHoursAll - leftHoursQuota
             )
-            onCourseCreated(course)
+            viewModel.addCourse(course)
 
             clearUi()
             dismiss()
@@ -88,10 +92,8 @@ class AddCourseDialogFragment(private val onCourseCreated: (Course) -> Unit) : D
     }
 
     companion object {
-        fun newInstance(onCourseCreated: (Course) -> Unit): AddCourseDialogFragment {
-           return AddCourseDialogFragment(
-               onCourseCreated
-           )
-       }
+        fun newInstance(): AddCourseDialogFragment {
+            return AddCourseDialogFragment()
+        }
     }
 }

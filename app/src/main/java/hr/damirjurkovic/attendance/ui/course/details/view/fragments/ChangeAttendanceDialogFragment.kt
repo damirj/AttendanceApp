@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_dialog_change_course.*
 
 class ChangeAttendanceDialogFragment(private val onCourseChanged: (hours: Int, attendance: Boolean) -> Unit) :
     BaseDialogFragment() {
+    //TODO pitati: da izbacim lambdu i ubacim shared viewModel
 
     override fun getLayoutRes() = R.layout.fragment_dialog_change_course
 

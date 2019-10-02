@@ -12,24 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.MyItemTouchHelper
 import hr.damirjurkovic.attendance.common.showYesNoDialog
+import hr.damirjurkovic.attendance.common.subscribe
 import hr.damirjurkovic.attendance.model.Course
-import hr.damirjurkovic.attendance.persistence.CourseRepository
 import hr.damirjurkovic.attendance.ui.base.BaseFragment
 import hr.damirjurkovic.attendance.ui.course.details.view.activities.startContainerActivity
 import hr.damirjurkovic.attendance.ui.course.list.adapters.CourseAdapter
+import hr.damirjurkovic.attendance.ui.course.list.presentation.CourseListViewModel
 import kotlinx.android.synthetic.main.fragment_attendance.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AttendanceFragment : BaseFragment() {
-//TODO viewmodel za attendanceFragment
 
-    private val repository = CourseRepository()
-    private val adapter by lazy {
-        CourseAdapter {
-            onItemSelected(
-                it
-            )
-        }
-    }
+    private val viewModel: CourseListViewModel by viewModel()
+    private val adapter by lazy { CourseAdapter { onItemSelected(it) } }
 
     override fun getLayoutRes() = R.layout.fragment_attendance
 
@@ -38,31 +33,11 @@ class AttendanceFragment : BaseFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.course_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.courseMenu -> {
-                repository.deleteAllCourses()
-                refreshList()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
         initListeners()
-        refreshList()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        refreshList()
+        subscribeToData()
     }
 
     private fun initUi() {
@@ -72,7 +47,33 @@ class AttendanceFragment : BaseFragment() {
         pullToRefresh.setOnRefreshListener { onRefresh() }
     }
 
-    private fun setUpItemTouchHelper() { //TODO korisiti safe call operator za context
+    private fun initListeners() {
+        addClass.setOnClickListener { showCreateClassDialog() }
+    }
+
+    private fun subscribeToData() {
+        viewModel.coursesLiveData.subscribe(this, this::handleCoursesChanged)
+    }
+
+    private fun handleCoursesChanged(courses: MutableList<Course>) {
+        refreshList(courses)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.course_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.courseMenu -> {
+                viewModel.deleteAllCourses()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setUpItemTouchHelper() {
         val deleteIcon = context?.let {
             ContextCompat.getDrawable(it, R.drawable.ic_delete_sweep_black_24dp)
         }
@@ -89,24 +90,17 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun onRefresh() {
-        refreshList()
+        refreshList(viewModel.coursesLiveData.value)
         pullToRefresh.isRefreshing = false
     }
 
-    private fun initListeners() {
-        addClass.setOnClickListener { addClass() }
+
+    private fun refreshList(courses: List<Course>) {
+        adapter.setData(courses)
     }
 
-    private fun refreshList() {
-        adapter.setData(repository.getAllCourses())
-    }
-
-    private fun addClass() {
-        val dialog =
-            AddCourseDialogFragment.newInstance {
-                repository.insertCourse(it)
-                refreshList()
-            }
+    private fun showCreateClassDialog() {
+        val dialog = AddCourseDialogFragment.newInstance()
         dialog.show(childFragmentManager, dialog.tag)
     }
 
@@ -128,12 +122,11 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun onNoClicked() {
-        refreshList()
+        courseRecyclerView.invalidate()
     }
 
     private fun onYesClicked(position: Int) {
-        repository.deleteCourse(adapter.removeTask(position))
-        refreshList()
+        viewModel.deleteCourse(adapter.removeTask(position))
     }
 
     companion object {

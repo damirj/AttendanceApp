@@ -4,6 +4,9 @@ import android.app.AlertDialog
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import hr.damirjurkovic.attendance.R
 
 fun FragmentActivity.showFragment(
@@ -41,4 +44,8 @@ fun Context.showYesNoDialog(
     }
 
     builder.create().show()
+}
+
+fun <T> LiveData<T>.subscribe(owner: LifecycleOwner, onDataChange: (T) -> Unit) {
+    this.observe(owner, Observer { onDataChange(it) })
 }
