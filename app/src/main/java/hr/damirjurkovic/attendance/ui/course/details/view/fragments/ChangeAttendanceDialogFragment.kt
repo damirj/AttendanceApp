@@ -1,10 +1,10 @@
-package hr.damirjurkovic.attendance.fragments
+package hr.damirjurkovic.attendance.ui.course.details.view.fragments
 
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import hr.damirjurkovic.attendance.R
-import hr.damirjurkovic.attendance.base.BaseDialogFragment
+import hr.damirjurkovic.attendance.ui.base.BaseDialogFragment
 import hr.damirjurkovic.attendance.common.displayToast
 import kotlinx.android.synthetic.main.fragment_dialog_change_course.*
 
@@ -56,7 +56,9 @@ class ChangeAttendanceDialogFragment(private val onCourseChanged: (hours: Int, a
 
     companion object {
         fun newInstance(onCourseChanged: (hours: Int, attendance: Boolean) -> Unit): ChangeAttendanceDialogFragment {
-            return ChangeAttendanceDialogFragment(onCourseChanged)
+            return ChangeAttendanceDialogFragment(
+                onCourseChanged
+            )
         }
     }
 

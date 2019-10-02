@@ -1,6 +1,5 @@
 package hr.damirjurkovic.attendance.common
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,10 +8,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 class MyItemTouchHelper(
-    private val onYesClicked: (position: Int) -> Unit,
-    private val onNoClicked: () -> Unit,
-    private val deleteIcon: Drawable,
-    private val context: Context
+    private val swiped: (Int) -> Unit,
+    private val deleteIcon: Drawable
 ) {
 
     private val swipeBackground: ColorDrawable = ColorDrawable(Color.RED)
@@ -28,10 +25,7 @@ class MyItemTouchHelper(
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                context?.showYesNoDialog(
-                    positiveReply = { onYesClicked(viewHolder.adapterPosition) },
-                    negativeReply = { onNoClicked() }
-                )
+                swiped(viewHolder.adapterPosition)
             }
 
             override fun onChildDraw(

@@ -1,4 +1,4 @@
-package hr.damirjurkovic.attendance.fragments
+package hr.damirjurkovic.attendance.ui.course.list.view.fragments
 
 import android.os.Bundle
 import android.text.TextUtils.isEmpty
@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import hr.damirjurkovic.attendance.Model.Course
+import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.displayToast
-import hr.damirjurkovic.attendance.persistence.CourseRepository
 import kotlinx.android.synthetic.main.fragment_dialog_new_course.*
 
 class AddCourseDialogFragment(private val onCourseCreated: (Course) -> Unit) : DialogFragment() {
@@ -49,12 +48,12 @@ class AddCourseDialogFragment(private val onCourseCreated: (Course) -> Unit) : D
             val exercise = newCourseExerciseInput.text.toString().toInt()
             val laboratory = newCourseLaboratoryInput.text.toString().toInt()
             val attendancePercent = newCoursePercentageInput.text.toString().toDouble()
-            var attendanceNum: Double =
+            val attendanceNum: Double =
                 (lecture + exercise + laboratory) * (attendancePercent / 100) - laboratory
-            var leftHoursQuota = attendanceNum
-            var leftHoursAll = (lecture + exercise).toDouble()
+            val leftHoursQuota = attendanceNum
+            val leftHoursAll = (lecture + exercise).toDouble()
 
-            var course = Course(
+            val course = Course(
                 courseName = newCourseTitleInput.text.toString(),
                 numLectures = lecture,
                 numExercises = exercise,
@@ -90,7 +89,9 @@ class AddCourseDialogFragment(private val onCourseCreated: (Course) -> Unit) : D
 
     companion object {
         fun newInstance(onCourseCreated: (Course) -> Unit): AddCourseDialogFragment {
-           return AddCourseDialogFragment(onCourseCreated)
+           return AddCourseDialogFragment(
+               onCourseCreated
+           )
        }
     }
 }

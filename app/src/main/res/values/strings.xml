@@ -12,7 +12,6 @@
     <string name="goodCourseState">#167306</string>
     <string name="alarmCourseState">#E6DB15</string>
     <string name="failCourseState">#A61C07</string>
-    <string name="DbName">ClassDb</string>
     <string name="filedNotFilled">Fill all inputs</string>
     <string name="fieldMustFill">You have to fill the inputs!</string>
     <string name="noCourse">No such course found</string>

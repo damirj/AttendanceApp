@@ -1,7 +1,7 @@
 package hr.damirjurkovic.attendance.persistence
 
 import hr.damirjurkovic.attendance.AttendanceApp
-import hr.damirjurkovic.attendance.Model.Course
+import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.db.CourseDao
 import hr.damirjurkovic.attendance.db.DaoProvider
 

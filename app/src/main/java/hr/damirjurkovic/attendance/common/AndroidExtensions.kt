@@ -1,11 +1,10 @@
 package hr.damirjurkovic.attendance.common
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.RecyclerView
+import hr.damirjurkovic.attendance.R
 
 fun FragmentActivity.showFragment(
     containerId: Int,
@@ -21,20 +20,20 @@ fun FragmentActivity.showFragment(
 }
 
 fun Context.showYesNoDialog(
-    message: String = "Are you sure?",
+    message: String = getString(R.string.areYouSure),
     positiveReply: () -> Unit,
     negativeReply: () -> Unit
 ) {
     val builder = AlertDialog.Builder(this)
     builder.setMessage(message).setCancelable(true)
-    builder.setPositiveButton("Yes") { dialog, _ ->
+    builder.setPositiveButton(getString(R.string.positiveReply)) { dialog, _ ->
         run {
             positiveReply()
             dialog.cancel()
         }
     }
 
-    builder.setNegativeButton("No") { dialog, _ ->
+    builder.setNegativeButton(getString(R.string.negativeReply)) { dialog, _ ->
         run {
             negativeReply()
             dialog.cancel()

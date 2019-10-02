@@ -1,9 +1,9 @@
-package hr.damirjurkovic.attendance.adapters
+package hr.damirjurkovic.attendance.ui.course.list.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import hr.damirjurkovic.attendance.Model.Course
+import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.persistence.CourseRepository
 

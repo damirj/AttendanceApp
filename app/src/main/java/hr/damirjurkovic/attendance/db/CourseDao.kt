@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
-import hr.damirjurkovic.attendance.Model.Course
+import hr.damirjurkovic.attendance.model.Course
 
 @Dao
 interface CourseDao {

@@ -1,4 +1,4 @@
-package hr.damirjurkovic.attendance.Model
+package hr.damirjurkovic.attendance.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

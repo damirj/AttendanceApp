@@ -1,12 +1,11 @@
-package hr.damirjurkovic.attendance.fragments
+package hr.damirjurkovic.attendance.ui.course.details.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import hr.damirjurkovic.attendance.Model.Course
+import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.EXTRA_COURSE_ID
 import hr.damirjurkovic.attendance.common.displayToast
@@ -43,12 +42,13 @@ class CourseDetailsFragment : Fragment() {
     }
 
     private fun changeAttendance() {
-        val dialog = ChangeAttendanceDialogFragment.newInstance { hours, attendance ->
-            onCourseChanged(
-                hours,
-                attendance
-            )
-        }
+        val dialog =
+            ChangeAttendanceDialogFragment.newInstance { hours, attendance ->
+                onCourseChanged(
+                    hours,
+                    attendance
+                )
+            }
         dialog.show(childFragmentManager, dialog.tag)
     }
 
@@ -105,7 +105,8 @@ class CourseDetailsFragment : Fragment() {
     companion object {
         fun newInstance(courseId: Int): CourseDetailsFragment {
             val bundle = Bundle().apply { putInt(EXTRA_COURSE_ID, courseId) }
-            return CourseDetailsFragment().apply { arguments = bundle }
+            return CourseDetailsFragment()
+                .apply { arguments = bundle }
         }
     }
 }

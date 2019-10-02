@@ -1,8 +1,8 @@
-package hr.damirjurkovic.attendance.activity
+package hr.damirjurkovic.attendance.ui.main.activities
 
 import hr.damirjurkovic.attendance.R
-import hr.damirjurkovic.attendance.adapters.ViewPagerAdapter
-import hr.damirjurkovic.attendance.base.BaseActivity
+import hr.damirjurkovic.attendance.ui.base.BaseActivity
+import hr.damirjurkovic.attendance.ui.main.adapters.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -10,7 +10,11 @@ class MainActivity : BaseActivity() {
     override fun getLayoutRes(): Int = R.layout.activity_main
 
     override fun setUpUi() {
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, this)
+        viewPager.adapter =
+            ViewPagerAdapter(
+                supportFragmentManager,
+                this
+            )
         tabs.setupWithViewPager(viewPager)
 
         tabs.getTabAt(0)?.setIcon(R.drawable.ic_access_time_black_24dp)

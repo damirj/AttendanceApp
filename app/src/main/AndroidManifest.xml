@@ -12,7 +12,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="hr.damirjurkovic.attendance.activity.MainActivity">
+
+        <activity android:name="hr.damirjurkovic.attendance.ui.main.activities.MainActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -20,7 +22,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="hr.damirjurkovic.attendance.activity.ContainerActivity">
+        <activity android:name="hr.damirjurkovic.attendance.ui.course.details.view.activities.ContainerActivity"
+                android:screenOrientation="portrait">
 
         </activity>
     </application>

@@ -1,4 +1,4 @@
-package hr.damirjurkovic.attendance.fragments
+package hr.damirjurkovic.attendance.ui.course.list.view.fragments
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,20 +9,27 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import hr.damirjurkovic.attendance.Model.Course
 import hr.damirjurkovic.attendance.R
-import hr.damirjurkovic.attendance.activity.startContainerActivity
-import hr.damirjurkovic.attendance.adapters.CourseAdapter
-import hr.damirjurkovic.attendance.base.BaseFragment
 import hr.damirjurkovic.attendance.common.MyItemTouchHelper
+import hr.damirjurkovic.attendance.common.showYesNoDialog
+import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.persistence.CourseRepository
+import hr.damirjurkovic.attendance.ui.base.BaseFragment
+import hr.damirjurkovic.attendance.ui.course.details.view.activities.startContainerActivity
+import hr.damirjurkovic.attendance.ui.course.list.adapters.CourseAdapter
 import kotlinx.android.synthetic.main.fragment_attendance.*
 
 class AttendanceFragment : BaseFragment() {
 //TODO viewmodel za attendanceFragment
 
     private val repository = CourseRepository()
-    private val adapter by lazy { CourseAdapter { onItemSelected(it) } }
+    private val adapter by lazy {
+        CourseAdapter {
+            onItemSelected(
+                it
+            )
+        }
+    }
 
     override fun getLayoutRes() = R.layout.fragment_attendance
 
@@ -65,19 +72,20 @@ class AttendanceFragment : BaseFragment() {
         pullToRefresh.setOnRefreshListener { onRefresh() }
     }
 
+    private fun setUpItemTouchHelper() { //TODO korisiti safe call operator za context
+        val deleteIcon = context?.let {
+            ContextCompat.getDrawable(it, R.drawable.ic_delete_sweep_black_24dp)
+        }
 
-    private fun setUpItemTouchHelper() {
-        val deleteIcon =
-            ContextCompat.getDrawable(this.context!!, R.drawable.ic_delete_sweep_black_24dp)!!
-        val myItemTouchHelper = MyItemTouchHelper(
-            { onYesClicked(it) },
-            { onNoClicked() },
-            deleteIcon,
-            context!!
-        ) //TODO jel moze ovo drugacije tj. bez '!!'
-        val callback = myItemTouchHelper.setUpItemTouchHelper()
-        val itemTouchHelper = ItemTouchHelper(callback)
-        itemTouchHelper.attachToRecyclerView(courseRecyclerView)
+        deleteIcon?.let {
+            val myItemTouchHelper = MyItemTouchHelper(
+                { onSwiped(it) },
+                it
+            )
+            val callback = myItemTouchHelper.setUpItemTouchHelper()
+            val itemTouchHelper = ItemTouchHelper(callback)
+            itemTouchHelper.attachToRecyclerView(courseRecyclerView)
+        }
     }
 
     private fun onRefresh() {
@@ -94,15 +102,29 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun addClass() {
-        val dialog = AddCourseDialogFragment.newInstance {
-            repository.insertCourse(it)
-            refreshList()
-        }
+        val dialog =
+            AddCourseDialogFragment.newInstance {
+                repository.insertCourse(it)
+                refreshList()
+            }
         dialog.show(childFragmentManager, dialog.tag)
     }
 
     private fun onItemSelected(course: Course) {
-        context?.run { startContainerActivity(this, course.courseDbId) }
+        context?.run {
+            startContainerActivity(
+                this,
+                course.courseDbId
+            )
+        }
+    }
+
+    private fun onSwiped(adapterPosition: Int) {
+        context?.run {
+            showYesNoDialog(
+                positiveReply = { onYesClicked(adapterPosition) },
+                negativeReply = { onNoClicked() })
+        }
     }
 
     private fun onNoClicked() {

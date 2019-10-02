@@ -1,6 +1,6 @@
 package hr.damirjurkovic.attendance.persistence
 
-import hr.damirjurkovic.attendance.Model.Course
+import hr.damirjurkovic.attendance.model.Course
 
 interface RepositoryInterface {
 

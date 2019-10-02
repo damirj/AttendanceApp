@@ -1,4 +1,4 @@
-package hr.damirjurkovic.attendance.base
+package hr.damirjurkovic.attendance.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

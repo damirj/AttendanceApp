@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import hr.damirjurkovic.attendance.Model.Course
-import hr.damirjurkovic.attendance.R
+import hr.damirjurkovic.attendance.common.DATABASE_NAME
+import hr.damirjurkovic.attendance.model.Course
 
 @Database(entities = [Course::class], version = 1)
 abstract class DaoProvider: RoomDatabase() {
@@ -20,7 +20,7 @@ abstract class DaoProvider: RoomDatabase() {
                 instance = Room.databaseBuilder(
                     context.applicationContext,
                     DaoProvider::class.java,
-                    context.getString(R.string.DbName)
+                    DATABASE_NAME
                 ).allowMainThreadQueries().build()
             }
             return instance as DaoProvider
