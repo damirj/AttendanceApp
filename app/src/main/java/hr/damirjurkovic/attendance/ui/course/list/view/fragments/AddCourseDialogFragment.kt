@@ -10,13 +10,9 @@ import androidx.fragment.app.DialogFragment
 import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.displayToast
-import hr.damirjurkovic.attendance.ui.course.list.presentation.CourseListViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_new_course.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class AddCourseDialogFragment : DialogFragment() {
-
-    private val viewModel: CourseListViewModel by sharedViewModel()
+class AddCourseDialogFragment(private val addCourse: (Course) -> Unit) : DialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,32 +44,36 @@ class AddCourseDialogFragment : DialogFragment() {
             context?.displayToast(getString(R.string.filedNotFilled))
             return
         } else {
-            val lecture = newCourseLectureInput.text.toString().toInt()
-            val exercise = newCourseExerciseInput.text.toString().toInt()
-            val laboratory = newCourseLaboratoryInput.text.toString().toInt()
-            val attendancePercent = newCoursePercentageInput.text.toString().toDouble()
-            val attendanceNum: Double =
-                (lecture + exercise + laboratory) * (attendancePercent / 100) - laboratory
-            val leftHoursQuota = attendanceNum
-            val leftHoursAll = (lecture + exercise).toDouble()
-
-            val course = Course(
-                courseName = newCourseTitleInput.text.toString(),
-                numLectures = lecture,
-                numExercises = exercise,
-                numLaboratory = laboratory,
-                attendancePercent = attendancePercent.toInt(),
-                attendanceNum = attendanceNum,
-                leftHoursQuota = leftHoursQuota,
-                wentHours = 0.0,
-                leftHoursAll = leftHoursAll,
-                alarmState = leftHoursAll - leftHoursQuota
-            )
-            viewModel.addCourse(course)
+            addCourse(createCourse())
 
             clearUi()
             dismiss()
         }
+    }
+
+    private fun createCourse(): Course{
+        val lecture = newCourseLectureInput.text.toString().toInt()
+        val exercise = newCourseExerciseInput.text.toString().toInt()
+        val laboratory = newCourseLaboratoryInput.text.toString().toInt()
+        val attendancePercent = newCoursePercentageInput.text.toString().toDouble()
+        val attendanceNum: Double =
+            (lecture + exercise + laboratory) * (attendancePercent / 100) - laboratory
+        val leftHoursQuota = attendanceNum
+        val leftHoursAll = (lecture + exercise).toDouble()
+
+        val course = Course(
+            courseName = newCourseTitleInput.text.toString(),
+            numLectures = lecture,
+            numExercises = exercise,
+            numLaboratory = laboratory,
+            attendancePercent = attendancePercent.toInt(),
+            attendanceNum = attendanceNum,
+            leftHoursQuota = leftHoursQuota,
+            wentHours = 0.0,
+            leftHoursAll = leftHoursAll,
+            alarmState = leftHoursAll - leftHoursQuota
+        )
+        return course
     }
 
     private fun clearUi() {
@@ -92,8 +92,8 @@ class AddCourseDialogFragment : DialogFragment() {
     }
 
     companion object {
-        fun newInstance(): AddCourseDialogFragment {
-            return AddCourseDialogFragment()
+        fun newInstance(addCourse: (Course) -> Unit): AddCourseDialogFragment {
+            return AddCourseDialogFragment(addCourse)
         }
     }
 }

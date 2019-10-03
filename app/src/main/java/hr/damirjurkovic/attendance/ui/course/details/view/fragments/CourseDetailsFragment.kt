@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.EXTRA_COURSE_ID
 import hr.damirjurkovic.attendance.common.displayToast
+import hr.damirjurkovic.attendance.common.subscribe
 import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.ui.course.details.presentation.CourseDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_course_details.*
@@ -16,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CourseDetailsFragment : Fragment() {
 
     private val viewModel: CourseDetailsViewModel by viewModel()
-    private var courseId = 0
+    private val courseId by lazy { arguments?.getInt(EXTRA_COURSE_ID) ?: 0 }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,33 +29,34 @@ class CourseDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setCourseID(courseId)
         initListeners()
-        arguments?.getInt(EXTRA_COURSE_ID)?.let { courseId = it }
-        tryDisplayDetails()
-    }
-
-    private fun checkIfCourseFinished(leftHoursAll: Double) {
-        if (leftHoursAll <= 0) btnAttendance.isEnabled = false
+        subscribeToData()
     }
 
     private fun initListeners() {
         btnAttendance.setOnClickListener { changeAttendance() }
     }
 
+    private fun subscribeToData() {
+        viewModel.courseLiveData.subscribe(this, this::handleCoursesChanged)
+    }
+
+    private fun handleCoursesChanged(course: Course) {
+        tryDisplayDetails(course) //TODO zasto je u bazi courseDbId nullable
+    }
+
     private fun changeAttendance() {
-        val dialog =
-            ChangeAttendanceDialogFragment.newInstance { hours, attendance ->
-                onCourseChanged(
-                    hours,
-                    attendance
-                )
-            }
+        val dialog = ChangeAttendanceDialogFragment.newInstance{hours, didAttend -> onChangedCourse(hours, didAttend)}
         dialog.show(childFragmentManager, dialog.tag)
     }
 
-    private fun tryDisplayDetails() {
+    private fun onChangedCourse(hours: Int, didAttend: Boolean){
+        viewModel.changeCourse(hours, didAttend)
+    }
+
+    private fun tryDisplayDetails(course: Course) {
         try {
-            val course = viewModel.getCourse(courseId)
             displayCourse(course)
             checkIfCourseFinished(course.leftHoursAll)
         } catch (e: NoSuchElementException) {
@@ -73,30 +75,8 @@ class CourseDetailsFragment : Fragment() {
         courseLeftHours.text = course.leftHoursAll.toString()
     }
 
-    private fun onCourseChanged(hours: Int, attendance: Boolean) {
-        val course = viewModel.getCourse(courseId)
-        var hoursReal = hours
-
-        if (hours > course.leftHoursAll) hoursReal = course.leftHoursAll.toInt()
-
-        if (attendance) {
-            viewModel.updateAttendanceDetails(
-                courseId,
-                if (course.leftHoursQuota - hoursReal > 0) course.leftHoursQuota - hoursReal else 0.0,
-                course.wentHours + hoursReal,
-                course.leftHoursAll - hoursReal,
-                course.leftHoursAll - course.leftHoursQuota
-            )
-        } else {
-            viewModel.updateAttendanceDetails(
-                courseId,
-                course.leftHoursQuota,
-                course.wentHours,
-                course.leftHoursAll - hoursReal,
-                course.leftHoursAll - hoursReal - course.leftHoursQuota
-            )
-        }
-        tryDisplayDetails()
+    private fun checkIfCourseFinished(leftHoursAll: Double) {
+        if (leftHoursAll <= 0) btnAttendance.isEnabled = false
     }
 
     companion object {

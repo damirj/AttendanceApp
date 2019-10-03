@@ -90,18 +90,21 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun onRefresh() {
-        refreshList(viewModel.coursesLiveData.value)
+        viewModel.refresh()
         pullToRefresh.isRefreshing = false
     }
-
 
     private fun refreshList(courses: List<Course>) {
         adapter.setData(courses)
     }
 
     private fun showCreateClassDialog() {
-        val dialog = AddCourseDialogFragment.newInstance()
+        val dialog = AddCourseDialogFragment.newInstance{onAddCourse(it)}
         dialog.show(childFragmentManager, dialog.tag)
+    }
+
+    private fun onAddCourse(course: Course){
+        viewModel.addCourse(course)
     }
 
     private fun onItemSelected(course: Course) {
@@ -117,12 +120,12 @@ class AttendanceFragment : BaseFragment() {
         context?.run {
             showYesNoDialog(
                 positiveReply = { onYesClicked(adapterPosition) },
-                negativeReply = { onNoClicked() })
+                negativeReply = { onNoClicked(adapterPosition) })
         }
     }
 
-    private fun onNoClicked() {
-        courseRecyclerView.invalidate()
+    private fun onNoClicked(adapterPosition: Int) {
+        adapter.notifyItemChanged(adapterPosition)
     }
 
     private fun onYesClicked(position: Int) {

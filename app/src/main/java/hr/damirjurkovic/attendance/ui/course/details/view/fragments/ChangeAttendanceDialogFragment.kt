@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import hr.damirjurkovic.attendance.R
-import hr.damirjurkovic.attendance.ui.base.BaseDialogFragment
 import hr.damirjurkovic.attendance.common.displayToast
+import hr.damirjurkovic.attendance.ui.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.fragment_dialog_change_course.*
 
 
-class ChangeAttendanceDialogFragment(private val onCourseChanged: (hours: Int, attendance: Boolean) -> Unit) :
-    BaseDialogFragment() {
-    //TODO pitati: da izbacim lambdu i ubacim shared viewModel
+class ChangeAttendanceDialogFragment(private val changeCourse: (Int, Boolean) -> Unit) : BaseDialogFragment() {
 
     override fun getLayoutRes() = R.layout.fragment_dialog_change_course
-
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
@@ -34,11 +31,7 @@ class ChangeAttendanceDialogFragment(private val onCourseChanged: (hours: Int, a
 
     private fun saveChanges() {
         if (isInputFilled()) {
-            if (btnAttend.isChecked) {
-                onCourseChanged(numOfHours.text.toString().toInt(), true)
-            } else {
-                onCourseChanged(numOfHours.text.toString().toInt(), false)
-            }
+            changeCourse(numOfHours.text.toString().toInt(), btnAttend.isChecked)
             clearUi()
             dismiss()
         } else {
@@ -56,11 +49,8 @@ class ChangeAttendanceDialogFragment(private val onCourseChanged: (hours: Int, a
         (btnAttend.isChecked || btnMissed.isChecked) && numOfHours.text.isNotEmpty()
 
     companion object {
-        fun newInstance(onCourseChanged: (hours: Int, attendance: Boolean) -> Unit): ChangeAttendanceDialogFragment {
-            return ChangeAttendanceDialogFragment(
-                onCourseChanged
-            )
+        fun newInstance(changeCourse: (hours: Int, didAttend: Boolean) -> Unit): ChangeAttendanceDialogFragment {
+            return ChangeAttendanceDialogFragment(changeCourse)
         }
     }
-
 }

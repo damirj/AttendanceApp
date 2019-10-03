@@ -14,20 +14,8 @@ class CourseRepository(private val db: DaoProvider, private val courseDao: Cours
         return course
     }
 
-    override fun updateAttendanceState(
-        courseId: Int,
-        leftHoursQuota: Double,
-        wentHours: Double,
-        leftHoursAll: Double,
-        alarmState: Double
-    ) {
-        courseDao.updateAttendanceState(
-            courseId,
-            leftHoursQuota,
-            wentHours,
-            leftHoursAll,
-            alarmState
-        )
+    override fun updateCourse(course: Course): Course {
+        return courseDao.updateAttendanceState(course)
     }
 
     override fun deleteCourse(course: Course) {

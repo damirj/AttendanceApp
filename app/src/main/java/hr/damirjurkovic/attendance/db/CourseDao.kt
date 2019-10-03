@@ -1,10 +1,7 @@
 package hr.damirjurkovic.attendance.db
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.IGNORE
-import androidx.room.Query
 import hr.damirjurkovic.attendance.model.Course
 
 @Dao
@@ -16,8 +13,14 @@ interface CourseDao {
     @Insert(onConflict = IGNORE)
     fun insertCourse(course: Course)
 
-    @Query("UPDATE Course SET leftHoursQuota = :leftHoursQuota, wentHours = :wentHours, leftHoursAll = :leftHoursAll, alarmState = :alarmState WHERE courseDbId = :courseId")
-    fun updateAttendanceState(courseId: Int, leftHoursQuota: Double, wentHours: Double, leftHoursAll: Double, alarmState: Double)
+    @Transaction
+    fun updateAttendanceState(course: Course): Course {
+        updateCourse(course)
+        return getCourse(course.courseDbId ?: 0)
+    }
+
+    @Update
+    fun updateCourse(course: Course)
 
     @Delete
     fun deleteCourse(course: Course)

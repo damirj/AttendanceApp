@@ -9,7 +9,8 @@ import org.koin.dsl.module
 val databaseModule = module {
     single {
         Room.databaseBuilder(androidContext(), DaoProvider::class.java, DATABASE_NAME)
-            .allowMainThreadQueries().build()
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration().build()
     }
     single { get<DaoProvider>().courseDao() }
 }

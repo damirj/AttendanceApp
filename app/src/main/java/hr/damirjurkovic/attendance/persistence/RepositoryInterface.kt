@@ -8,13 +8,7 @@ interface RepositoryInterface {
 
     fun insertCourse(course: Course): Course
 
-    fun updateAttendanceState(
-        courseId: Int,
-        leftHoursQuota: Double,
-        wentHours: Double,
-        leftHoursAll: Double,
-        alarmState: Double
-    )
+    fun updateCourse(course: Course): Course
 
     fun deleteCourse(course: Course)
 

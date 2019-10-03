@@ -26,19 +26,13 @@ class CourseAdapter(private val onItemSelected: (Course) -> Unit) :
     override fun getItemCount() = courses.size
 
     override fun onBindViewHolder(holder: CourseHolder, position: Int) {
-        holder.dataBinder(viewModel.coursesLiveData.value[position], onItemSelected)
+        holder.dataBinder(courses[position], onItemSelected)
     }
-
 
     fun removeTask(position: Int): Course {
-        val course = viewModel.coursesLiveData.value[position]
-        viewModel.deleteCourse(course)
+        val course = courses[position]
+        courses.remove(course)
         notifyItemRemoved(position)
         return course
-    }
-
-    fun addCourse(course: Course, position: Int) {
-        courses.add(course)
-        notifyItemInserted(position)
     }
 }

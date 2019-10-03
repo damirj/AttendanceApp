@@ -19,16 +19,18 @@ class CourseListViewModel(private val repository: RepositoryInterface) : ViewMod
 
     fun addCourse(course: Course) {
         repository.insertCourse(course).also {
-            _coursesLiveData.value?.add(it)
+            val courses = _coursesLiveData.value
+            courses?.add(course)
+            _coursesLiveData.value = courses
         }
     }
 
-    fun deleteAllCourses(){
+    fun deleteAllCourses() {
         repository.deleteAllCourses()
         _coursesLiveData.value?.clear()
     }
 
-    fun deleteCourse(course: Course){
+    fun deleteCourse(course: Course) {
         repository.deleteCourse(course).also {
             _coursesLiveData.value?.remove(course)
         }
@@ -36,5 +38,9 @@ class CourseListViewModel(private val repository: RepositoryInterface) : ViewMod
 
     private fun loadCourses() {
         _coursesLiveData.value = repository.getAllCourses()
+    }
+
+    fun refresh() {
+        loadCourses()
     }
 }
