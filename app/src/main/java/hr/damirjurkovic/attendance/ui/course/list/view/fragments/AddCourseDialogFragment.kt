@@ -58,22 +58,20 @@ class AddCourseDialogFragment(private val addCourse: (Course) -> Unit) : DialogF
         val attendancePercent = newCoursePercentageInput.text.toString().toDouble()
         val attendanceNum: Double =
             (lecture + exercise + laboratory) * (attendancePercent / 100) - laboratory
-        val leftHoursQuota = attendanceNum
         val leftHoursAll = (lecture + exercise).toDouble()
 
-        val course = Course(
+        return Course(
             courseName = newCourseTitleInput.text.toString(),
             numLectures = lecture,
             numExercises = exercise,
             numLaboratory = laboratory,
             attendancePercent = attendancePercent.toInt(),
             attendanceNum = attendanceNum,
-            leftHoursQuota = leftHoursQuota,
+            leftHoursQuota = attendanceNum,
             wentHours = 0.0,
             leftHoursAll = leftHoursAll,
-            alarmState = leftHoursAll - leftHoursQuota
+            alarmState = leftHoursAll - attendanceNum
         )
-        return course
     }
 
     private fun clearUi() {

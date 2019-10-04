@@ -6,11 +6,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.ui.course.list.view.fragments.AttendanceFragment
-import hr.damirjurkovic.attendance.ui.statistics.view.fragments.StatisticsFragmnet
+import hr.damirjurkovic.attendance.ui.statistics.view.fragments.StatisticsFragment
 
 class ViewPagerAdapter(fm: FragmentManager, val context: Context) : FragmentPagerAdapter(fm) {
 
-    private val fragmentList = listOf(AttendanceFragment.newInstance(), StatisticsFragmnet.newInstance())
+    private val fragmentList = listOf(AttendanceFragment.newInstance(), StatisticsFragment.newInstance())
 
     override fun getItem(position: Int): Fragment {
         return fragmentList[position]

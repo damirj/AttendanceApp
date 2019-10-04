@@ -80,7 +80,7 @@ class AttendanceFragment : BaseFragment() {
 
         deleteIcon?.let {
             val myItemTouchHelper = MyItemTouchHelper(
-                { onSwiped(it) },
+                { position -> onSwiped(position) },
                 it
             )
             val callback = myItemTouchHelper.setUpItemTouchHelper()

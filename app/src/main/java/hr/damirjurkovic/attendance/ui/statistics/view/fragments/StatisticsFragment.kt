@@ -5,13 +5,13 @@ import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.ui.base.BaseFragment
 
 
-class StatisticsFragmnet : BaseFragment() {
+class StatisticsFragment : BaseFragment() {
 
     override fun getLayoutRes() = R.layout.fragment_statistics_fragmnet
 
     companion object {
         fun newInstance(): Fragment {
-            return StatisticsFragmnet()
+            return StatisticsFragment()
         }
     }
 }
