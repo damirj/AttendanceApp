@@ -3,6 +3,7 @@ package hr.damirjurkovic.attendance
 import android.app.Application
 import android.content.Context
 import hr.damirjurkovic.attendance.di.databaseModule
+import hr.damirjurkovic.attendance.di.interactionModule
 import hr.damirjurkovic.attendance.di.presentationModule
 import hr.damirjurkovic.attendance.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
@@ -18,7 +19,7 @@ class AttendanceApp : Application() {
 
         startKoin {
             androidContext(this@AttendanceApp)
-            modules(listOf(repositoryModule, databaseModule, presentationModule))
+            modules(listOf(repositoryModule, databaseModule, presentationModule, interactionModule))
             androidLogger(Level.DEBUG)
         }
     }

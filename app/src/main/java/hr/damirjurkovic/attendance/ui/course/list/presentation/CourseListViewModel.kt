@@ -2,17 +2,12 @@ package hr.damirjurkovic.attendance.ui.course.list.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import hr.damirjurkovic.attendance.interaction.DeleteAllCoursesUseCase
-import hr.damirjurkovic.attendance.interaction.DeleteCourseUseCase
-import hr.damirjurkovic.attendance.interaction.GetAllCoursesUseCase
-import hr.damirjurkovic.attendance.interaction.InsertCourseUseCase
+import androidx.lifecycle.ViewModel
 import hr.damirjurkovic.attendance.model.Course
-import hr.damirjurkovic.attendance.ui.base.BaseViewModel
-import hr.damirjurkovic.attendance.ui.base.Success
-import hr.damirjurkovic.attendance.ui.course.list.view.CourseListEffect
+import hr.damirjurkovic.attendance.persistence.RepositoryInterface
 
 
-class CourseListViewModel(private val getAllCourses: GetAllCoursesUseCase, private val instertCourse: InsertCourseUseCase, private val deleteCourse: DeleteCourseUseCase, private val deleteAllCourses: DeleteAllCoursesUseCase) : BaseViewModel<MutableList<Course>, CourseListEffect>() {
+class CourseListViewModel(private val repository: RepositoryInterface) : ViewModel() {
 
     private val _coursesLiveData = MutableLiveData<MutableList<Course>>()
     val coursesLiveData: LiveData<MutableList<Course>>

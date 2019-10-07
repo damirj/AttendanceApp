@@ -10,22 +10,19 @@ import hr.damirjurkovic.attendance.common.EXTRA_COURSE_ID
 import hr.damirjurkovic.attendance.common.displayToast
 import hr.damirjurkovic.attendance.common.subscribe
 import hr.damirjurkovic.attendance.model.Course
+import hr.damirjurkovic.attendance.ui.base.BaseFragment
+import hr.damirjurkovic.attendance.ui.base.Loading
+import hr.damirjurkovic.attendance.ui.base.Success
+import hr.damirjurkovic.attendance.ui.base.ViewState
 import hr.damirjurkovic.attendance.ui.course.details.presentation.CourseDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_course_details.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CourseDetailsFragment : Fragment() {
+class CourseDetailsFragment : BaseFragment() {
+    override fun getLayoutRes() = R.layout.fragment_course_details
 
     private val viewModel: CourseDetailsViewModel by viewModel()
     private val courseId by lazy { arguments?.getInt(EXTRA_COURSE_ID) ?: 0 }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_course_details, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,11 +36,14 @@ class CourseDetailsFragment : Fragment() {
     }
 
     private fun subscribeToData() {
-        viewModel.courseLiveData.subscribe(this, this::handleCoursesChanged)
+        viewModel.viewState.subscribe(this, this::handleCoursesChanged)
     }
 
-    private fun handleCoursesChanged(course: Course) {
-        tryDisplayDetails(course) //TODO zasto je u bazi courseDbId nullable
+    private fun handleCoursesChanged(viewState: ViewState<Course>) {
+        when(viewState){
+            is Loading -> showLoading(courseLoadingProgress)
+            is Success -> tryDisplayDetails(viewState.data)
+        }
     }
 
     private fun changeAttendance() {
@@ -57,6 +57,7 @@ class CourseDetailsFragment : Fragment() {
 
     private fun tryDisplayDetails(course: Course) {
         try {
+            hideLoading(courseLoadingProgress)
             displayCourse(course)
             checkIfCourseFinished(course.leftHoursAll)
         } catch (e: NoSuchElementException) {

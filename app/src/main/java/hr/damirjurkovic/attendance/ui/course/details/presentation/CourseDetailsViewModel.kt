@@ -1,27 +1,25 @@
 package hr.damirjurkovic.attendance.ui.course.details.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import hr.damirjurkovic.attendance.interaction.ChangeCourseUseCase
+import hr.damirjurkovic.attendance.interaction.GetCourseUseCase
 import hr.damirjurkovic.attendance.model.Course
-import hr.damirjurkovic.attendance.persistence.RepositoryInterface
+import hr.damirjurkovic.attendance.ui.base.BaseViewModel
+import hr.damirjurkovic.attendance.ui.base.Success
+import hr.damirjurkovic.attendance.ui.course.details.view.CourseDetailsEffect
 import kotlin.properties.Delegates
 
-class CourseDetailsViewModel(private val repository: RepositoryInterface) : ViewModel() {
-
-    private val _courseLiveData = MutableLiveData<Course>()
-    val courseLiveData: LiveData<Course>
-        get() = _courseLiveData
+class CourseDetailsViewModel(private val getCourseFromRepository: GetCourseUseCase, private val changeCourseAttendance: ChangeCourseUseCase) : BaseViewModel<Course, CourseDetailsEffect>() {
 
     private var courseId by Delegates.notNull<Int>()
     private lateinit var course: Course
 
     fun setCourseID(courseId: Int) {
         this.courseId = courseId
-        loadCourse()
+        getCourse()
     }
 
     fun changeCourse(hours: Int, didAttend: Boolean) {
+        //TODO jel treba ovo sve prebaciti u ChangeCourseUseCaseImpl? BasaUseCase mi prima samo 1 parametar ovdje mi trebaju 3 (course, hours, didAttend)
         course.run {
             val hoursReal = if (hours > leftHoursAll) leftHoursAll.toInt() else hours
             if (didAttend) {
@@ -36,7 +34,7 @@ class CourseDetailsViewModel(private val repository: RepositoryInterface) : View
                     leftHoursAll = leftHoursAll,
                     alarmState = alarmState
                 )
-                updateCourse(course)
+                _viewState.value = Success(changeCourseAttendance(course))
             } else {
                 val leftHoursAll = this.leftHoursAll - hoursReal
                 val alarmState = this.leftHoursAll - this.leftHoursQuota - hoursReal
@@ -46,17 +44,13 @@ class CourseDetailsViewModel(private val repository: RepositoryInterface) : View
                     leftHoursAll = leftHoursAll,
                     alarmState = alarmState
                 )
-                updateCourse(course)
+                _viewState.value = Success(changeCourseAttendance(course))
             }
         }
     }
 
-    private fun updateCourse(course: Course) {
-        _courseLiveData.value = repository.updateCourse(course)
-    }
-
-    private fun loadCourse() {
-        course = repository.getCourse(courseId)
-        _courseLiveData.value = course
+    private fun getCourse(){
+        course = getCourseFromRepository(courseId)
+        _viewState.value = Success(course)
     }
 }
