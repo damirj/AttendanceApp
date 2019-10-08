@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.displayToast
+import hr.damirjurkovic.attendance.model.Course
 import kotlinx.android.synthetic.main.fragment_dialog_new_course.*
 
 class AddCourseDialogFragment(private val addCourse: (Course) -> Unit) : DialogFragment() {
@@ -45,13 +45,12 @@ class AddCourseDialogFragment(private val addCourse: (Course) -> Unit) : DialogF
             return
         } else {
             addCourse(createCourse())
-
             clearUi()
             dismiss()
         }
     }
 
-    private fun createCourse(): Course{
+    private fun createCourse(): Course {
         val lecture = newCourseLectureInput.text.toString().toInt()
         val exercise = newCourseExerciseInput.text.toString().toInt()
         val laboratory = newCourseLaboratoryInput.text.toString().toInt()

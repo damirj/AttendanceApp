@@ -2,8 +2,8 @@ package hr.damirjurkovic.attendance.interaction
 
 import hr.damirjurkovic.attendance.model.Course
 
-interface GetCourseUseCase: BaseUseCase<Int, Course> {
+interface GetCourseUseCase {
 
-    override operator fun invoke(courseId: Int): Course
+    operator fun invoke(courseId: Int): Course
 
 }

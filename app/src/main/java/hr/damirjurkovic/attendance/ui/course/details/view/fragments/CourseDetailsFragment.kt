@@ -1,10 +1,7 @@
 package hr.damirjurkovic.attendance.ui.course.details.view.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.EXTRA_COURSE_ID
 import hr.damirjurkovic.attendance.common.displayToast
@@ -40,18 +37,23 @@ class CourseDetailsFragment : BaseFragment() {
     }
 
     private fun handleCoursesChanged(viewState: ViewState<Course>) {
-        when(viewState){
+        when (viewState) {
             is Loading -> showLoading(courseLoadingProgress)
             is Success -> tryDisplayDetails(viewState.data)
         }
     }
 
     private fun changeAttendance() {
-        val dialog = ChangeAttendanceDialogFragment.newInstance{hours, didAttend -> onChangedCourse(hours, didAttend)}
+        val dialog = ChangeAttendanceDialogFragment.newInstance { hours, didAttend ->
+            onChangedCourse(
+                hours,
+                didAttend
+            )
+        }
         dialog.show(childFragmentManager, dialog.tag)
     }
 
-    private fun onChangedCourse(hours: Int, didAttend: Boolean){
+    private fun onChangedCourse(hours: Int, didAttend: Boolean) {
         viewModel.changeCourse(hours, didAttend)
     }
 

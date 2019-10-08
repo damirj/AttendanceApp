@@ -8,7 +8,11 @@ import androidx.fragment.app.DialogFragment
 
 abstract class BaseDialogFragment : DialogFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(getLayoutRes(), container)
     }
 

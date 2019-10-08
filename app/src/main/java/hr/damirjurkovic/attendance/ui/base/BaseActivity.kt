@@ -1,15 +1,12 @@
 package hr.damirjurkovic.attendance.ui.base
 
 import android.os.Bundle
-import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-
 import hr.damirjurkovic.attendance.common.gone
-
 import hr.damirjurkovic.attendance.common.visible
 
-abstract class BaseActivity: AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

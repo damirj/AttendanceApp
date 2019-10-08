@@ -9,7 +9,8 @@ import hr.damirjurkovic.attendance.ui.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.fragment_dialog_change_course.*
 
 
-class ChangeAttendanceDialogFragment(private val changeCourse: (Int, Boolean) -> Unit) : BaseDialogFragment() {
+class ChangeAttendanceDialogFragment(private val changeCourse: (Int, Boolean) -> Unit) :
+    BaseDialogFragment() {
 
     override fun getLayoutRes() = R.layout.fragment_dialog_change_course
     override fun onStart() {

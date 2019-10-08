@@ -99,12 +99,13 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun showCreateClassDialog() {
-        val dialog = AddCourseDialogFragment.newInstance{onAddCourse(it)}
+        val dialog = AddCourseDialogFragment.newInstance { onAddCourse(it) }
         dialog.show(childFragmentManager, dialog.tag)
     }
 
-    private fun onAddCourse(course: Course){
+    private fun onAddCourse(course: Course) {
         viewModel.addCourse(course)
+        //TODO ispraviti bug: kad se napravi novi course ne mogu ga odma otvoriti vec moram refreshati
     }
 
     private fun onItemSelected(course: Course) {
