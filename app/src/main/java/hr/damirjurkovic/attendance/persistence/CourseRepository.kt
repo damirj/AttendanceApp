@@ -9,22 +9,13 @@ class CourseRepository(private val db: DaoProvider, private val courseDao: Cours
 
     override fun getAllCourses(): MutableList<Course> = courseDao.getAllCourses()
 
-    override fun insertCourse(course: Course): Course {
-        courseDao.insertNewCourse(course)
-        return course
-    }
+    override fun insertCourse(course: Course): Course = courseDao.insertNewCourse(course)
 
-    override fun updateCourse(course: Course): Course {
-        return courseDao.updateAttendanceState(course)
-    }
+    override fun updateCourse(course: Course): Course = courseDao.updateAttendanceState(course)
 
-    override fun deleteCourse(course: Course) {
-        courseDao.deleteCourse(course)
-    }
+    override fun deleteCourse(course: Course) = courseDao.deleteCourse(course)
 
-    override fun deleteAllCourses() {
-        courseDao.deleteAllCourses()
-    }
+    override fun deleteAllCourses() = courseDao.deleteAllCourses()
 
     override fun getCourse(courseId: Int): Course = courseDao.getCourse(courseId)
 }

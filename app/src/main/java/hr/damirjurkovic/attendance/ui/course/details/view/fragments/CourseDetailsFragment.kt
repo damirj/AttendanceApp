@@ -25,7 +25,7 @@ class CourseDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setCourseID(courseId)
+        viewModel.getCourse(courseId)
         initListeners()
         subscribeToData()
     }

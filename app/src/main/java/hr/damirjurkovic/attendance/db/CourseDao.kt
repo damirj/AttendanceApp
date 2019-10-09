@@ -15,8 +15,8 @@ interface CourseDao {
 
     @Transaction
     fun insertNewCourse(course: Course): Course {
-        val id = insertCourse(course)
-        return getCourse(id.toInt())
+        insertCourse(course)
+        return getLastCourse()
     }
 
     @Transaction
@@ -36,5 +36,8 @@ interface CourseDao {
 
     @Query("SELECT * FROM Course WHERE courseDbId = :courseId")
     fun getCourse(courseId: Int): Course
+
+    @Query("SELECT * FROM Course ORDER BY courseDbId DESC LIMIT 1")
+    fun getLastCourse(): Course
 
 }

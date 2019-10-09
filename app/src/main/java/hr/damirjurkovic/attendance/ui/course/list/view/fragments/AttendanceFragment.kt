@@ -130,7 +130,6 @@ class AttendanceFragment : BaseFragment() {
 
     private fun onAddCourse(course: Course) {
         viewModel.addCourse(course)
-        //TODO ispraviti bug: kad se napravi novi course ne mogu ga odma otvoriti vec moram refreshati
     }
 
     private fun onItemSelected(course: Course) {
@@ -141,12 +140,6 @@ class AttendanceFragment : BaseFragment() {
             )
         }
     }
-
-    /*
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-     */
 
     private fun onSwiped(adapterPosition: Int) {
         context?.run {

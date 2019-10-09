@@ -17,18 +17,14 @@ class CourseDetailsViewModel(
     private var courseId by Delegates.notNull<Int>()
     private lateinit var course: Course
 
-    fun setCourseID(courseId: Int) {
-        this.courseId = courseId
-        getCourse()
-    }
-
     fun changeCourse(hours: Int, didAttend: Boolean) {
         course = changeCourseAttendance(course, hours, didAttend)
         _viewState.value = Success(course)
         checkIfCourseFinished()
     }
 
-    private fun getCourse() {
+    fun getCourse(id: Int) {
+        courseId = id
         course = getCourseFromRepository(courseId)
         _viewState.value = Success(course)
         checkIfCourseFinished()
