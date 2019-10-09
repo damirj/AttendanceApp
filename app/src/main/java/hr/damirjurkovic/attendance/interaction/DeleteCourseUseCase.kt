@@ -1,4 +1,8 @@
 package hr.damirjurkovic.attendance.interaction
 
-interface DeleteCourseUseCase {
+import hr.damirjurkovic.attendance.model.Course
+
+interface DeleteCourseUseCase : BaseUseCase<Course, Unit> {
+
+    override operator fun invoke(course: Course)
 }

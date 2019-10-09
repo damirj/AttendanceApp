@@ -18,6 +18,20 @@ class CourseAdapter(private val onItemSelected: (Course) -> Unit) :
         notifyDataSetChanged()
     }
 
+    fun addCourse(course: Course) {
+        courses.add(course)
+        notifyDataSetChanged()
+    }
+
+    fun removeCourse(position: Int): Course {
+        val course = courses[position]
+        courses.remove(course)
+        notifyItemRemoved(position)
+        return course
+    }
+
+    fun getCourse(position: Int) = courses[position]
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.course_row, parent, false)
         return CourseHolder(v)
@@ -29,10 +43,5 @@ class CourseAdapter(private val onItemSelected: (Course) -> Unit) :
         holder.dataBinder(courses[position], onItemSelected)
     }
 
-    fun removeTask(position: Int): Course {
-        val course = courses[position]
-        courses.remove(course)
-        notifyItemRemoved(position)
-        return course
-    }
+
 }

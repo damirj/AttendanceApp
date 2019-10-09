@@ -7,7 +7,6 @@ class ChangeCourseUseCaseImpl(private val courseRepository: RepositoryInterface)
     ChangeCourseUseCase {
 
     override operator fun invoke(course: Course, hours: Int, didAttend: Boolean): Course {
-        //TODO ispraviti logiku
         val hoursReal = if (hours > course.leftHoursAll) course.leftHoursAll.toInt() else hours
         if (didAttend) {
             val leftHoursQuota =

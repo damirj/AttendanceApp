@@ -10,7 +10,7 @@ class CourseRepository(private val db: DaoProvider, private val courseDao: Cours
     override fun getAllCourses(): MutableList<Course> = courseDao.getAllCourses()
 
     override fun insertCourse(course: Course): Course {
-        courseDao.insertCourse(course)
+        courseDao.insertNewCourse(course)
         return course
     }
 

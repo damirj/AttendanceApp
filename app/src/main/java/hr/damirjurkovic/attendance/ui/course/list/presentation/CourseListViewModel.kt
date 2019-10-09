@@ -1,43 +1,47 @@
 package hr.damirjurkovic.attendance.ui.course.list.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import hr.damirjurkovic.attendance.interaction.DeleteAllCoursesUseCase
+import hr.damirjurkovic.attendance.interaction.DeleteCourseUseCase
+import hr.damirjurkovic.attendance.interaction.GetAllCoursesUseCase
+import hr.damirjurkovic.attendance.interaction.InsertCourseUseCase
 import hr.damirjurkovic.attendance.model.Course
-import hr.damirjurkovic.attendance.persistence.RepositoryInterface
+import hr.damirjurkovic.attendance.ui.base.BaseViewModel
+import hr.damirjurkovic.attendance.ui.base.Success
+import hr.damirjurkovic.attendance.ui.course.list.view.AllCoursesDeleted
+import hr.damirjurkovic.attendance.ui.course.list.view.CourseAdded
+import hr.damirjurkovic.attendance.ui.course.list.view.CourseDeleted
+import hr.damirjurkovic.attendance.ui.course.list.view.CourseListEffect
 
 
-class CourseListViewModel(private val repository: RepositoryInterface) : ViewModel() {
-
-    private val _coursesLiveData = MutableLiveData<MutableList<Course>>()
-    val coursesLiveData: LiveData<MutableList<Course>>
-        get() = _coursesLiveData
+class CourseListViewModel(
+    private val getAllCourses: GetAllCoursesUseCase,
+    private val insertCourse: InsertCourseUseCase,
+    private val deleteCourse: DeleteCourseUseCase,
+    private val removeAllCourses: DeleteAllCoursesUseCase
+) :
+    BaseViewModel<List<Course>, CourseListEffect>() {
 
     init {
         loadCourses()
     }
 
     fun addCourse(course: Course) {
-        repository.insertCourse(course).also {
-            val courses = _coursesLiveData.value
-            courses?.add(course)
-            _coursesLiveData.value = courses
-        }
+        _viewEffects.value = CourseAdded(insertCourse(course))
     }
 
     fun deleteAllCourses() {
-        repository.deleteAllCourses()
-        _coursesLiveData.value?.clear()
+        removeAllCourses()
+        _viewEffects.value = AllCoursesDeleted
     }
 
-    fun deleteCourse(course: Course) {
-        repository.deleteCourse(course).also {
-            _coursesLiveData.value?.remove(course)
-        }
+
+    fun deleteCourse(course: Course, position: Int) {
+        deleteCourse(course)
+        _viewEffects.value = CourseDeleted(position)
     }
 
     private fun loadCourses() {
-        _coursesLiveData.value = repository.getAllCourses()
+        _viewState.value = Success(getAllCourses())
     }
 
     fun refresh() {

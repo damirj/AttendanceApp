@@ -2,8 +2,8 @@ package hr.damirjurkovic.attendance.interaction
 
 import hr.damirjurkovic.attendance.model.Course
 
-interface GetAllCoursesUseCase: BaseUseCase<Unit, MutableList<Course>> {
+interface GetAllCoursesUseCase {
 
-    override operator fun invoke(param: Unit): MutableList<Course>
+    operator fun invoke(): MutableList<Course>
 
 }

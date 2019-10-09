@@ -12,6 +12,8 @@ import hr.damirjurkovic.attendance.ui.base.Loading
 import hr.damirjurkovic.attendance.ui.base.Success
 import hr.damirjurkovic.attendance.ui.base.ViewState
 import hr.damirjurkovic.attendance.ui.course.details.presentation.CourseDetailsViewModel
+import hr.damirjurkovic.attendance.ui.course.details.view.CourseDetailsEffect
+import hr.damirjurkovic.attendance.ui.course.details.view.DisableAttendanceBtn
 import kotlinx.android.synthetic.main.fragment_course_details.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,10 +35,17 @@ class CourseDetailsFragment : BaseFragment() {
     }
 
     private fun subscribeToData() {
-        viewModel.viewState.subscribe(this, this::handleCoursesChanged)
+        viewModel.viewState.subscribe(this, this::handleCourseChanged)
+        viewModel.viewEffects.subscribe(this, this::handleCourseChangedEffect)
     }
 
-    private fun handleCoursesChanged(viewState: ViewState<Course>) {
+    private fun handleCourseChangedEffect(viewEffect: CourseDetailsEffect) {
+        when (viewEffect) {
+            is DisableAttendanceBtn -> btnAttendance.isEnabled = false
+        }
+    }
+
+    private fun handleCourseChanged(viewState: ViewState<Course>) {
         when (viewState) {
             is Loading -> showLoading(courseLoadingProgress)
             is Success -> tryDisplayDetails(viewState.data)
@@ -61,7 +70,6 @@ class CourseDetailsFragment : BaseFragment() {
         try {
             hideLoading(courseLoadingProgress)
             displayCourse(course)
-            checkIfCourseFinished(course.leftHoursAll)
         } catch (e: NoSuchElementException) {
             context?.displayToast(getString(R.string.noCourse))
         }
@@ -76,10 +84,6 @@ class CourseDetailsFragment : BaseFragment() {
         attendanceNumHours.text = course.attendanceNum.toString()
         attendanceBeenHours.text = course.wentHours.toString()
         courseLeftHours.text = course.leftHoursAll.toString()
-    }
-
-    private fun checkIfCourseFinished(leftHoursAll: Double) {
-        if (leftHoursAll <= 0) btnAttendance.isEnabled = false
     }
 
     companion object {

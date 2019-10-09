@@ -6,6 +6,7 @@ import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.ui.base.BaseViewModel
 import hr.damirjurkovic.attendance.ui.base.Success
 import hr.damirjurkovic.attendance.ui.course.details.view.CourseDetailsEffect
+import hr.damirjurkovic.attendance.ui.course.details.view.DisableAttendanceBtn
 import kotlin.properties.Delegates
 
 class CourseDetailsViewModel(
@@ -22,11 +23,18 @@ class CourseDetailsViewModel(
     }
 
     fun changeCourse(hours: Int, didAttend: Boolean) {
-        _viewState.value = Success(changeCourseAttendance(course, hours, didAttend))
+        course = changeCourseAttendance(course, hours, didAttend)
+        _viewState.value = Success(course)
+        checkIfCourseFinished()
     }
 
     private fun getCourse() {
         course = getCourseFromRepository(courseId)
         _viewState.value = Success(course)
+        checkIfCourseFinished()
+    }
+
+    private fun checkIfCourseFinished() {
+        if (course.leftHoursAll <= 0) _viewEffects.value = DisableAttendanceBtn
     }
 }

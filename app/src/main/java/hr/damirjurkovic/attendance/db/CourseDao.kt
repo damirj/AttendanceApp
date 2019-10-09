@@ -11,7 +11,13 @@ interface CourseDao {
     fun getAllCourses(): MutableList<Course>
 
     @Insert(onConflict = IGNORE)
-    fun insertCourse(course: Course)
+    fun insertCourse(course: Course): Long
+
+    @Transaction
+    fun insertNewCourse(course: Course): Course {
+        val id = insertCourse(course)
+        return getCourse(id.toInt())
+    }
 
     @Transaction
     fun updateAttendanceState(course: Course): Course {

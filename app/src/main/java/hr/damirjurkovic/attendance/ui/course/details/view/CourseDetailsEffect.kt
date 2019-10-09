@@ -1,5 +1,4 @@
 package hr.damirjurkovic.attendance.ui.course.details.view
 
-class CourseDetailsEffect {
-
-}
+sealed class  CourseDetailsEffect
+object DisableAttendanceBtn : CourseDetailsEffect()

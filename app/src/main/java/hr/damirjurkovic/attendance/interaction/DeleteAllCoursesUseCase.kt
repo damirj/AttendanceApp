@@ -1,4 +1,6 @@
 package hr.damirjurkovic.attendance.interaction
 
-interface DeleteAllCoursesUseCase {
+interface DeleteAllCoursesUseCase{
+
+     operator fun invoke()
 }
