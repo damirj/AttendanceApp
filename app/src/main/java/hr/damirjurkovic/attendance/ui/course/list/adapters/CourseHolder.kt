@@ -26,14 +26,14 @@ class CourseHolder(override var containerView: View) : RecyclerView.ViewHolder(c
                     )
                 )
             )
-            in Double.MIN_VALUE..0.0 -> cardId.setBackgroundColor(
+            in -Double.MAX_VALUE..0.0 -> cardId.setBackgroundColor(
                 Color.parseColor(
                     context.getString(
                         R.string.failCourseState
                     )
                 )
             )
-            else -> cardId.setBackgroundColor(Color.parseColor(context.getString(R.string.failCourseState)))
+            else -> cardId.setBackgroundColor(Color.parseColor(context.getString(R.string.alarmCourseState)))
         }
     }
 }

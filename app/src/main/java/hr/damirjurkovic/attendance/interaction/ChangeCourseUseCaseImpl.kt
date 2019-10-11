@@ -1,5 +1,6 @@
 package hr.damirjurkovic.attendance.interaction
 
+import hr.damirjurkovic.attendance.common.ALARM_STATE_1
 import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.persistence.RepositoryInterface
 
@@ -13,24 +14,32 @@ class ChangeCourseUseCaseImpl(private val courseRepository: RepositoryInterface)
                 if (course.leftHoursQuota - hoursReal > 0) course.leftHoursQuota - hoursReal else 0.0
             val wentHours = course.wentHours + hoursReal
             val leftHoursAll = course.leftHoursAll - hoursReal
-            val alarmState = course.leftHoursAll - course.leftHoursQuota
-            val course = course.copy(
+            val alarmState = if (course.leftHoursQuota == 0.0) {
+                ALARM_STATE_1
+            } else {
+                course.leftHoursAll - course.leftHoursQuota
+            }
+            val courseUpdate = course.copy(
                 leftHoursQuota = leftHoursQuota,
                 wentHours = wentHours,
                 leftHoursAll = leftHoursAll,
                 alarmState = alarmState
             )
-            return courseRepository.updateCourse(course)
+            return courseRepository.updateCourse(courseUpdate)
         } else {
             val leftHoursAll = course.leftHoursAll - hoursReal
-            val alarmState = course.leftHoursAll - course.leftHoursQuota - hoursReal
-            val course = course.copy(
+            val alarmState = if (course.leftHoursQuota == 0.0) {
+                ALARM_STATE_1
+            } else {
+                course.leftHoursAll - course.leftHoursQuota - hoursReal
+            }
+            val courseUpdate = course.copy(
                 leftHoursQuota = course.leftHoursQuota,
                 wentHours = course.wentHours,
                 leftHoursAll = leftHoursAll,
                 alarmState = alarmState
             )
-            return courseRepository.updateCourse(course)
+            return courseRepository.updateCourse(courseUpdate)
         }
     }
 
