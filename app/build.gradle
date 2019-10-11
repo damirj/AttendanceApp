@@ -26,6 +26,7 @@ android {
 
 dependencies {
     def room_version = "2.1.0"
+    def koin_version = '2.0.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -44,5 +45,8 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
 }

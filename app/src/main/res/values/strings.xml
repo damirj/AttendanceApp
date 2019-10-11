@@ -1,11 +1,36 @@
 <resources>
     <string name="app_name">Dolaznost</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="naziv_kolegija">Naziv kolegija</string>
-    <string name="broj_predavanja">Broj Predavanja</string>
-    <string name="broj_auditornih">Broj Auditornih</string>
-    <string name="broj_labosa">Broj Labosa</string>
-    <string name="spremi">Spremi</string>
+    <string name="course_name">Course name</string>
+    <string name="num_of_lectures">Number of lectures</string>
+    <string name="num_of_exercises">Number of exercises</string>
+    <string name="num_of_lab">Number of laboratory exercises</string>
+    <string name="save">Save</string>
+    <string name="attendance">Attendance</string>
+    <string name="statistics">Statistics</string>
+    <string name="goodCourseState">#167306</string>
+    <string name="alarmCourseState">#E6DB15</string>
+    <string name="failCourseState">#A61C07</string>
+    <string name="filedNotFilled">Fill all inputs</string>
+    <string name="fieldMustFill">You have to fill the inputs!</string>
+    <string name="noCourse">No such course found</string>
+    <string name="areYouSure">Are you sure?</string>
+    <string name="positiveReply">YES!</string>
+    <string name="negativeReply">NO!</string>
+    <string name="must_come">Must come:</string>
+    <string name="remaining">Remaining:</string>
+    <string name="lecture">Lecture:</string>
+    <string name="exercise">Exercise:</string>
+    <string name="laboratory">Laboratory:</string>
+    <string name="must_still_come">Must still come:</string>
+    <string name="altogether_must_be">Altogether must be:</string>
+    <string name="youve_been_so_far">You\'ve been so far:</string>
+    <string name="left_until_the_end">Left until the end:</string>
+    <string name="change_attendance">Change attendance</string>
+    <string name="new_course">New course</string>
+    <string name="attendance_percentage">Attendance percentage</string>
+    <string name="number_of_hours">Number of hours</string>
+    <string name="attended">Attended</string>
+    <string name="missed">Missed</string>
 </resources>
