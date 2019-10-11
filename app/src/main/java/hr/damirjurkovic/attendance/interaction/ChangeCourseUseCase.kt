@@ -4,6 +4,6 @@ import hr.damirjurkovic.attendance.model.Course
 
 interface ChangeCourseUseCase {
 
-     operator fun invoke(course: Course, hours: Int, didAttend: Boolean): Course
+     operator fun invoke(course: Course, hours: Int, didAttend: Boolean)
 
 }

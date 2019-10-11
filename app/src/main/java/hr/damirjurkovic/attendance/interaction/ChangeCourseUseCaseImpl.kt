@@ -7,7 +7,7 @@ import hr.damirjurkovic.attendance.persistence.RepositoryInterface
 class ChangeCourseUseCaseImpl(private val courseRepository: RepositoryInterface) :
     ChangeCourseUseCase {
 
-    override operator fun invoke(course: Course, hours: Int, didAttend: Boolean): Course {
+    override operator fun invoke(course: Course, hours: Int, didAttend: Boolean) {
         val hoursReal = if (hours > course.leftHoursAll) course.leftHoursAll.toInt() else hours
         if (didAttend) {
             val leftHoursQuota =
@@ -25,7 +25,7 @@ class ChangeCourseUseCaseImpl(private val courseRepository: RepositoryInterface)
                 leftHoursAll = leftHoursAll,
                 alarmState = alarmState
             )
-            return courseRepository.updateCourse(courseUpdate)
+             courseRepository.updateCourse(courseUpdate)
         } else {
             val leftHoursAll = course.leftHoursAll - hoursReal
             val alarmState = if (course.leftHoursQuota == 0.0) {
@@ -39,7 +39,7 @@ class ChangeCourseUseCaseImpl(private val courseRepository: RepositoryInterface)
                 leftHoursAll = leftHoursAll,
                 alarmState = alarmState
             )
-            return courseRepository.updateCourse(courseUpdate)
+             courseRepository.updateCourse(courseUpdate)
         }
     }
 
