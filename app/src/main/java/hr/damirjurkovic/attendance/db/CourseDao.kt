@@ -1,5 +1,6 @@
 package hr.damirjurkovic.attendance.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.IGNORE
 import hr.damirjurkovic.attendance.model.Course
@@ -8,7 +9,7 @@ import hr.damirjurkovic.attendance.model.Course
 interface CourseDao {
 
     @Query("SELECT * FROM Course")
-    fun getAllCourses(): MutableList<Course>
+    fun getAllCourses(): LiveData<MutableList<Course>>
 
     @Insert(onConflict = IGNORE)
     fun insertCourse(course: Course): Long
@@ -22,7 +23,7 @@ interface CourseDao {
     @Transaction
     fun updateAttendanceState(course: Course): Course {
         updateCourse(course)
-        return getCourse(course.courseDbId ?: 0)
+        return getCourseForUpdate(course.courseDbId ?: 0)
     }
 
     @Update
@@ -35,9 +36,11 @@ interface CourseDao {
     fun deleteAllCourses()
 
     @Query("SELECT * FROM Course WHERE courseDbId = :courseId")
-    fun getCourse(courseId: Int): Course
+    fun getCourseForUpdate(courseId: Int): Course
+
+    @Query("SELECT * FROM Course WHERE courseDbId = :courseId")
+    fun getCourse(courseId: Int): LiveData<Course>
 
     @Query("SELECT * FROM Course ORDER BY courseDbId DESC LIMIT 1")
     fun getLastCourse(): Course
-
 }
