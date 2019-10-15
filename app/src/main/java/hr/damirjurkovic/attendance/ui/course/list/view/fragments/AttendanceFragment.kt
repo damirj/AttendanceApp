@@ -1,5 +1,6 @@
 package hr.damirjurkovic.attendance.ui.course.list.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -18,10 +19,9 @@ import hr.damirjurkovic.attendance.ui.base.BaseFragment
 import hr.damirjurkovic.attendance.ui.course.details.view.activities.startContainerActivity
 import hr.damirjurkovic.attendance.ui.course.list.adapters.CourseAdapter
 import hr.damirjurkovic.attendance.ui.course.list.presentation.CourseListViewModel
-import hr.damirjurkovic.attendance.ui.course.list.view.AllCoursesDeleted
-import hr.damirjurkovic.attendance.ui.course.list.view.CourseAdded
-import hr.damirjurkovic.attendance.ui.course.list.view.CourseDeleted
 import hr.damirjurkovic.attendance.ui.course.list.view.CourseListEffect
+import hr.damirjurkovic.attendance.ui.course.list.view.SignedOut
+import hr.damirjurkovic.attendance.ui.login.activities.EmailPasswordActivity
 import kotlinx.android.synthetic.main.fragment_attendance.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -66,9 +66,7 @@ class AttendanceFragment : BaseFragment() {
 
     private fun handleViewEffects(viewEffect: CourseListEffect) {
         when (viewEffect) {
-            is CourseAdded -> adapter.addCourse(viewEffect.course)
-            is CourseDeleted -> adapter.removeCourse(viewEffect.position)
-            is AllCoursesDeleted -> adapter.setData(listOf())
+            is SignedOut -> backToLoginPage()
         }
     }
 
@@ -80,6 +78,10 @@ class AttendanceFragment : BaseFragment() {
         return when (item.itemId) {
             R.id.courseMenu -> {
                 viewModel.deleteAllCourses()
+                true
+            }
+            R.id.signOut -> {
+                viewModel.signOutFromAcc()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -143,6 +145,11 @@ class AttendanceFragment : BaseFragment() {
 
     private fun onYesClicked(position: Int) {
         viewModel.removeCourse(adapter.getCourse(position))
+    }
+
+    private fun backToLoginPage() {
+        val intent = Intent(activity, EmailPasswordActivity::class.java)
+        startActivity(intent)
     }
 
     companion object {

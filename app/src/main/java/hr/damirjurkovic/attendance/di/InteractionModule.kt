@@ -11,5 +11,6 @@ val interactionModule = module {
     factory<DeleteCourseUseCase> { DeleteCourseUseCaseImpl(get()) }
     factory<GetAllCoursesUseCase> { GetAllCoursesUseCaseImpl(get()) }
     factory<InsertCourseUseCase> { InsertCourseUseCaseImpl(get()) }
+    factory<SignOutUseCase> {SignOutUseCaseImpl(get())}
 
 }

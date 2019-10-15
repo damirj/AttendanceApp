@@ -2,5 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
             android:id="@+id/courseMenu"
-            android:title="Delete all courses"/>
+            android:title="@string/delete_all_courses"/>
+
+    <item
+            android:id="@+id/signOut"
+            android:title="@string/sign_out"/>
 </menu>
