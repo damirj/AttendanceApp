@@ -7,7 +7,7 @@ interface RepositoryInterface {
 
     fun getAllCourses(): LiveData<MutableList<Course>>
 
-    fun insertCourse(course: Course): Course
+    fun insertCourse(course: Course)
 
     fun updateCourse(course: Course)
 

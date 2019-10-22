@@ -56,7 +56,7 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun subscribeToData() {
-        viewModel.courses.subscribe(this, this::handleCoursesChanges)
+        viewModel.coursesLiveData.subscribe(this, this::handleCoursesChanges)
         viewModel.viewEffects.subscribe(this, this::handleViewEffects)
     }
 
@@ -105,7 +105,7 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun onRefresh() {
-        viewModel.courses.value?.let { adapter.setData(it) }
+        viewModel.coursesLiveData.value?.let { adapter.setData(it) }
         pullToRefresh.isRefreshing = false
     }
 
