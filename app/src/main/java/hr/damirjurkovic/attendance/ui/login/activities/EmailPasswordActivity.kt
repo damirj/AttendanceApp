@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.ext.android.inject
 
 class EmailPasswordActivity : BaseActivity() {
-
+    //TODO napraviti viewmodel i novu klasu za createacc i signIn
     private val auth: FirebaseAuth by inject()
 
     override fun getLayoutRes(): Int = R.layout.activity_login

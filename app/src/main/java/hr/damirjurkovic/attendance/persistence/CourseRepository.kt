@@ -20,7 +20,8 @@ class CourseRepository(
     override fun getAllCourses(): LiveData<MutableList<Course>> {
         firebaseDatabase.setPersistenceEnabled(true)
         val uid = auth.currentUser?.uid ?: 0
-        val myRef = firebaseDatabase.getReference("users/$uid/courses")
+        val myRef =
+            firebaseDatabase.getReference("users/$uid/courses") //TODO izbaciti string u konstante
         val courses = MutableLiveData<MutableList<Course>>()
         val localCourses = mutableListOf<Course>()
 

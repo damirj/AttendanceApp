@@ -6,9 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.MyItemTouchHelper
@@ -89,20 +87,10 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun setUpItemTouchHelper() {
-        val deleteIcon = context?.let {
-            ContextCompat.getDrawable(it, R.drawable.ic_delete_sweep_black_24dp)
-        }
-
-        deleteIcon?.let {
-            val myItemTouchHelper = MyItemTouchHelper(
-                { position -> onSwiped(position) },
-                it
-            )
-            val callback = myItemTouchHelper.setUpItemTouchHelper()
-            val itemTouchHelper = ItemTouchHelper(callback)
-            itemTouchHelper.attachToRecyclerView(courseRecyclerView)
-        }
+        val myItemTouchHelper = MyItemTouchHelper { position -> onSwiped(position) }
+        myItemTouchHelper.getItemTouchHelper().attachToRecyclerView(courseRecyclerView)
     }
+
 
     private fun onRefresh() {
         viewModel.coursesLiveData.value?.let { adapter.setData(it) }

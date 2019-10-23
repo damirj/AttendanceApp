@@ -17,6 +17,4 @@ data class Course(
     var wentHours: Double = 0.0,
     var leftHoursAll: Double = 0.0,
     var alarmState: Double = 0.0
-) {
-    // constructor() : this(0, "",)
-}
+)

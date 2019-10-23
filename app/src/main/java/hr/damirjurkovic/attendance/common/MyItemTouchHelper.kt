@@ -3,18 +3,22 @@ package hr.damirjurkovic.attendance.common
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import hr.damirjurkovic.attendance.AttendanceApp
+import hr.damirjurkovic.attendance.R
 
 class MyItemTouchHelper(
-    private val swiped: (Int) -> Unit,
-    private val deleteIcon: Drawable
+    private val swiped: (Int) -> Unit
 ) {
-
     private val swipeBackground: ColorDrawable = ColorDrawable(Color.RED)
+    private val deleteIcon = ContextCompat.getDrawable(
+        AttendanceApp.instance,
+        R.drawable.ic_delete_sweep_black_24dp
+    )
 
-    fun setUpItemTouchHelper(): ItemTouchHelper.SimpleCallback {
+    private fun setUpItemTouchHelper(): ItemTouchHelper.SimpleCallback {
         return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -37,32 +41,33 @@ class MyItemTouchHelper(
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-
                 val itemView = viewHolder.itemView
 
-                val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
-                swipeBackground.setBounds(
-                    itemView.right + dX.toInt(),
-                    itemView.top,
-                    itemView.right,
-                    itemView.bottom
-                )
-                deleteIcon.setBounds(
-                    itemView.right - iconMargin - deleteIcon.intrinsicWidth,
-                    itemView.top + iconMargin,
-                    itemView.right - iconMargin,
-                    itemView.bottom - iconMargin
-                )
-                swipeBackground.draw(c)
-                c.save()
-                c.clipRect(
-                    itemView.right + dX.toInt(),
-                    itemView.top,
-                    itemView.right,
-                    itemView.bottom
-                )
-                deleteIcon.draw(c)
-                c.restore()
+                deleteIcon?.let { icon ->
+                    val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
+                    swipeBackground.setBounds(
+                        itemView.right + dX.toInt(),
+                        itemView.top,
+                        itemView.right,
+                        itemView.bottom
+                    )
+                    icon.setBounds(
+                        itemView.right - iconMargin - deleteIcon.intrinsicWidth,
+                        itemView.top + iconMargin,
+                        itemView.right - iconMargin,
+                        itemView.bottom - iconMargin
+                    )
+                    swipeBackground.draw(c)
+                    c.save()
+                    c.clipRect(
+                        itemView.right + dX.toInt(),
+                        itemView.top,
+                        itemView.right,
+                        itemView.bottom
+                    )
+                    icon.draw(c)
+                    c.restore()
+                }
                 super.onChildDraw(
                     c,
                     recyclerView,
@@ -75,4 +80,6 @@ class MyItemTouchHelper(
             }
         }
     }
+
+    fun getItemTouchHelper() = ItemTouchHelper(setUpItemTouchHelper())
 }
