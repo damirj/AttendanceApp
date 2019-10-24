@@ -15,6 +15,6 @@ val databaseModule = module {
     }
     single { get<DaoProvider>().courseDao() }
 
-    single { FirebaseDatabase.getInstance() }
+    single { FirebaseDatabase.getInstance().apply { this.setPersistenceEnabled(true) } }
 
 }

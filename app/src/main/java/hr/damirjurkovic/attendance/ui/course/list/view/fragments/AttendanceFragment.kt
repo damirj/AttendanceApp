@@ -19,7 +19,7 @@ import hr.damirjurkovic.attendance.ui.course.list.adapters.CourseAdapter
 import hr.damirjurkovic.attendance.ui.course.list.presentation.CourseListViewModel
 import hr.damirjurkovic.attendance.ui.course.list.view.CourseListEffect
 import hr.damirjurkovic.attendance.ui.course.list.view.SignedOut
-import hr.damirjurkovic.attendance.ui.login.activities.EmailPasswordActivity
+import hr.damirjurkovic.attendance.ui.login.view.activities.EmailPasswordActivity
 import kotlinx.android.synthetic.main.fragment_attendance.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -138,6 +138,8 @@ class AttendanceFragment : BaseFragment() {
     private fun backToLoginPage() {
         val intent = Intent(activity, EmailPasswordActivity::class.java)
         startActivity(intent)
+        activity?.finish()
+
     }
 
     companion object {

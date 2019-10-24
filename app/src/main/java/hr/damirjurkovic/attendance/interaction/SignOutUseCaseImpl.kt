@@ -1,8 +1,7 @@
 package hr.damirjurkovic.attendance.interaction
 
-import com.google.firebase.auth.FirebaseAuth
+import hr.damirjurkovic.attendance.common.EmailPasswordAuth
 
-class SignOutUseCaseImpl(private val auth: FirebaseAuth): SignOutUseCase {
+class SignOutUseCaseImpl(private val auth: EmailPasswordAuth) : SignOutUseCase {
     override fun invoke() = auth.signOut()
 }
-//TODO izbaciti firebaseAuth u repository

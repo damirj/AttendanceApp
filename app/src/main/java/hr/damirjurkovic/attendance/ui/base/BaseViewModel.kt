@@ -13,10 +13,4 @@ abstract class BaseViewModel<T : Any, E> : ViewModel() {
     protected val _viewEffects = MutableLiveData<E>()
     val viewEffects: LiveData<E>
         get() = _viewEffects
-
-    protected fun executeUseCase(action: () -> Unit) {
-        _viewState.value = Loading()
-        action()
-    }
-
 }

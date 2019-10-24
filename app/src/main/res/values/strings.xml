@@ -48,4 +48,5 @@
     <string name="firebase_status_fmt">Firebase User: %s</string>
     <string name="auth_failed">Authentication failed</string>
     <string name="delete_all_courses">Delete all courses</string>
+    <string name="required">Required.</string>
 </resources>
