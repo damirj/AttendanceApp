@@ -1,23 +1,24 @@
 package hr.damirjurkovic.attendance.ui.course.list.presentation
 
-import hr.damirjurkovic.attendance.interaction.DeleteAllCoursesUseCase
-import hr.damirjurkovic.attendance.interaction.DeleteCourseUseCase
-import hr.damirjurkovic.attendance.interaction.GetAllCoursesUseCase
-import hr.damirjurkovic.attendance.interaction.InsertCourseUseCase
+import androidx.lifecycle.LiveData
+import hr.damirjurkovic.attendance.interaction.*
 import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.ui.base.BaseViewModel
 import hr.damirjurkovic.attendance.ui.course.list.view.CourseListEffect
+import hr.damirjurkovic.attendance.ui.course.list.view.SignedOut
 
 
 class CourseListViewModel(
     private val getAllCourses: GetAllCoursesUseCase,
     private val insertCourse: InsertCourseUseCase,
     private val deleteCourse: DeleteCourseUseCase,
-    private val removeAllCourses: DeleteAllCoursesUseCase
+    private val removeAllCourses: DeleteAllCoursesUseCase,
+    private val signOut: SignOutUseCase
+
 ) :
     BaseViewModel<List<Course>, CourseListEffect>() {
 
-    val courses = getAllCourses()
+    val coursesLiveData: LiveData<MutableList<Course>> = getAllCourses()
 
     fun addCourse(course: Course) {
         insertCourse(course)
@@ -30,4 +31,10 @@ class CourseListViewModel(
     fun removeCourse(course: Course) {
         deleteCourse(course)
     }
+
+    fun signOutFromAcc() {
+        signOut()
+        _viewEffects.value = SignedOut
+    }
+
 }

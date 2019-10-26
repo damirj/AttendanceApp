@@ -1,13 +1,12 @@
 package hr.damirjurkovic.attendance.ui.course.list.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.MyItemTouchHelper
@@ -18,10 +17,9 @@ import hr.damirjurkovic.attendance.ui.base.BaseFragment
 import hr.damirjurkovic.attendance.ui.course.details.view.activities.startContainerActivity
 import hr.damirjurkovic.attendance.ui.course.list.adapters.CourseAdapter
 import hr.damirjurkovic.attendance.ui.course.list.presentation.CourseListViewModel
-import hr.damirjurkovic.attendance.ui.course.list.view.AllCoursesDeleted
-import hr.damirjurkovic.attendance.ui.course.list.view.CourseAdded
-import hr.damirjurkovic.attendance.ui.course.list.view.CourseDeleted
 import hr.damirjurkovic.attendance.ui.course.list.view.CourseListEffect
+import hr.damirjurkovic.attendance.ui.course.list.view.SignedOut
+import hr.damirjurkovic.attendance.ui.login.view.activities.EmailPasswordActivity
 import kotlinx.android.synthetic.main.fragment_attendance.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -56,7 +54,7 @@ class AttendanceFragment : BaseFragment() {
     }
 
     private fun subscribeToData() {
-        viewModel.courses.subscribe(this, this::handleCoursesChanges)
+        viewModel.coursesLiveData.subscribe(this, this::handleCoursesChanges)
         viewModel.viewEffects.subscribe(this, this::handleViewEffects)
     }
 
@@ -66,9 +64,7 @@ class AttendanceFragment : BaseFragment() {
 
     private fun handleViewEffects(viewEffect: CourseListEffect) {
         when (viewEffect) {
-            is CourseAdded -> adapter.addCourse(viewEffect.course)
-            is CourseDeleted -> adapter.removeCourse(viewEffect.position)
-            is AllCoursesDeleted -> adapter.setData(listOf())
+            is SignedOut -> backToLoginPage()
         }
     }
 
@@ -82,28 +78,22 @@ class AttendanceFragment : BaseFragment() {
                 viewModel.deleteAllCourses()
                 true
             }
+            R.id.signOut -> {
+                viewModel.signOutFromAcc()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun setUpItemTouchHelper() {
-        val deleteIcon = context?.let {
-            ContextCompat.getDrawable(it, R.drawable.ic_delete_sweep_black_24dp)
-        }
-
-        deleteIcon?.let {
-            val myItemTouchHelper = MyItemTouchHelper(
-                { position -> onSwiped(position) },
-                it
-            )
-            val callback = myItemTouchHelper.setUpItemTouchHelper()
-            val itemTouchHelper = ItemTouchHelper(callback)
-            itemTouchHelper.attachToRecyclerView(courseRecyclerView)
-        }
+        val myItemTouchHelper = MyItemTouchHelper { position -> onSwiped(position) }
+        myItemTouchHelper.getItemTouchHelper().attachToRecyclerView(courseRecyclerView)
     }
 
+
     private fun onRefresh() {
-        viewModel.courses.value?.let { adapter.setData(it) }
+        viewModel.coursesLiveData.value?.let { adapter.setData(it) }
         pullToRefresh.isRefreshing = false
     }
 
@@ -143,6 +133,13 @@ class AttendanceFragment : BaseFragment() {
 
     private fun onYesClicked(position: Int) {
         viewModel.removeCourse(adapter.getCourse(position))
+    }
+
+    private fun backToLoginPage() {
+        val intent = Intent(activity, EmailPasswordActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
+
     }
 
     companion object {

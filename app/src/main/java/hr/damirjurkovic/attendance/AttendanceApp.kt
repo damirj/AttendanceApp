@@ -1,11 +1,7 @@
 package hr.damirjurkovic.attendance
 
 import android.app.Application
-import android.content.Context
-import hr.damirjurkovic.attendance.di.databaseModule
-import hr.damirjurkovic.attendance.di.interactionModule
-import hr.damirjurkovic.attendance.di.presentationModule
-import hr.damirjurkovic.attendance.di.repositoryModule
+import hr.damirjurkovic.attendance.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -19,14 +15,22 @@ class AttendanceApp : Application() {
 
         startKoin {
             androidContext(this@AttendanceApp)
-            modules(listOf(repositoryModule, databaseModule, presentationModule, interactionModule))
+            modules(
+                listOf(
+                    repositoryModule,
+                    databaseModule,
+                    presentationModule,
+                    interactionModule,
+                    authenticationModule
+                )
+            )
             androidLogger(Level.DEBUG)
         }
     }
 
     companion object {
-        private lateinit var instance: AttendanceApp
-        fun getAppContext(): Context = instance.applicationContext
+        lateinit var instance: AttendanceApp
+            private set
     }
 
 }

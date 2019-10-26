@@ -2,7 +2,7 @@ package hr.damirjurkovic.attendance.interaction
 
 import hr.damirjurkovic.attendance.model.Course
 
-interface InsertCourseUseCase: BaseUseCase<Course, Course> {
+interface InsertCourseUseCase {
 
-    override operator fun invoke(course: Course): Course
+    operator fun invoke(course: Course)
 }

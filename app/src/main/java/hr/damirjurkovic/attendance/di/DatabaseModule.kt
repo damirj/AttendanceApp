@@ -1,6 +1,7 @@
 package hr.damirjurkovic.attendance.di
 
 import androidx.room.Room
+import com.google.firebase.database.FirebaseDatabase
 import hr.damirjurkovic.attendance.common.DATABASE_NAME
 import hr.damirjurkovic.attendance.db.DaoProvider
 import org.koin.android.ext.koin.androidContext
@@ -13,4 +14,7 @@ val databaseModule = module {
             .fallbackToDestructiveMigration().build()
     }
     single { get<DaoProvider>().courseDao() }
+
+    single { FirebaseDatabase.getInstance().apply { this.setPersistenceEnabled(true) } }
+
 }
