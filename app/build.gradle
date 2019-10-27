@@ -44,16 +44,13 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
 
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
+    //koin
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
-    implementation "com.google.firebase:firebase-auth:19.1.0"
-    implementation 'com.google.firebase:firebase-database:19.1.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

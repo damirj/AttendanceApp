@@ -1,7 +1,11 @@
 package hr.damirjurkovic.attendance
 
 import android.app.Application
-import hr.damirjurkovic.attendance.di.*
+import com.example.domain.di.interactionModule
+import hr.damirjurkovic.attendance.di.presentationModule
+import hr.damirjurkovic.data.di.authenticationModule
+import hr.damirjurkovic.data.di.databaseModule
+import hr.damirjurkovic.data.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

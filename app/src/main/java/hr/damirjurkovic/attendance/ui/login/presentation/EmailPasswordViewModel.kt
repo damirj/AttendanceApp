@@ -1,9 +1,9 @@
 package hr.damirjurkovic.attendance.ui.login.presentation
 
-import hr.damirjurkovic.attendance.interaction.CheckLoginUseCase
-import hr.damirjurkovic.attendance.interaction.CreateAccountUseCase
-import hr.damirjurkovic.attendance.interaction.SignInUseCase
-import hr.damirjurkovic.attendance.interaction.ValidateFormUseCase
+import com.example.domain.interaction.authentication.CheckLoginUseCase
+import com.example.domain.interaction.authentication.CreateAccountUseCase
+import com.example.domain.interaction.authentication.SignInUseCase
+import com.example.domain.interaction.authentication.ValidateFormUseCase
 import hr.damirjurkovic.attendance.ui.base.BaseViewModel
 import hr.damirjurkovic.attendance.ui.login.view.EmailPasswordEffect
 import hr.damirjurkovic.attendance.ui.login.view.Fail

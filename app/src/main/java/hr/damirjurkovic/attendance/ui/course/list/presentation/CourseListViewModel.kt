@@ -1,8 +1,12 @@
 package hr.damirjurkovic.attendance.ui.course.list.presentation
 
 import androidx.lifecycle.LiveData
-import hr.damirjurkovic.attendance.interaction.*
-import hr.damirjurkovic.attendance.model.Course
+import com.example.domain.interaction.authentication.SignOutUseCase
+import com.example.domain.interaction.course.DeleteAllCoursesUseCase
+import com.example.domain.interaction.course.DeleteCourseUseCase
+import com.example.domain.interaction.course.GetAllCoursesUseCase
+import com.example.domain.interaction.course.InsertCourseUseCase
+import com.example.domain.model.Course
 import hr.damirjurkovic.attendance.ui.base.BaseViewModel
 import hr.damirjurkovic.attendance.ui.course.list.view.CourseListEffect
 import hr.damirjurkovic.attendance.ui.course.list.view.SignedOut

@@ -1,8 +1,25 @@
 apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
 
 dependencies {
+    def lifecycle_version = "2.1.0"
+    def koin_version = '2.0.1'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.1.0'
+
+    //koin
+    implementation "org.koin:koin-android:$koin_version"
+
+    //LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
 }
 
-sourceCompatibility = "7"
-targetCompatibility = "7"
+

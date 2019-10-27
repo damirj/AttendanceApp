@@ -3,8 +3,8 @@ package hr.damirjurkovic.attendance.ui.course.list.adapters
 import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.Course
 import hr.damirjurkovic.attendance.R
-import hr.damirjurkovic.attendance.model.Course
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.course_row.view.*
 
