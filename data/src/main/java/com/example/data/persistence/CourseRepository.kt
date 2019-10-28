@@ -1,7 +1,9 @@
-package hr.damirjurkovic.data.persistence
+package com.example.data.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.data.common.FIREBASE_COURSES_PATH
+import com.example.data.common.FIREBASE_USERS_PATH
 import com.example.domain.model.Course
 import com.example.domain.persistence.RepositoryInterface
 import com.google.firebase.auth.FirebaseAuth
@@ -9,8 +11,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import hr.damirjurkovic.data.common.FIREBASE_COURSES_PATH
-import hr.damirjurkovic.data.common.FIREBASE_USERS_PATH
 import java.util.concurrent.TimeUnit
 
 class CourseRepository(

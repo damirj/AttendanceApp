@@ -1,4 +1,4 @@
-package hr.damirjurkovic.data.common
+package com.example.data.persistence
 
 import com.example.domain.persistence.EmailPasswordAuthInterface
 import com.google.firebase.auth.FirebaseAuth

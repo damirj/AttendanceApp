@@ -1,6 +1,7 @@
 package com.example.domain.persistence
 
 
+import androidx.lifecycle.LiveData
 import com.example.domain.model.Course
 
 interface RepositoryInterface {

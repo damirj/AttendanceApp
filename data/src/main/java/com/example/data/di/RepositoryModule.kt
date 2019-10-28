@@ -1,7 +1,7 @@
-package hr.damirjurkovic.data.di
+package com.example.data.di
 
+import com.example.data.persistence.CourseRepository
 import com.example.domain.persistence.RepositoryInterface
-import hr.damirjurkovic.data.persistence.CourseRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {

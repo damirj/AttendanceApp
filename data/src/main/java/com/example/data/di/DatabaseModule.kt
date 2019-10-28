@@ -1,4 +1,4 @@
-package hr.damirjurkovic.data.di
+package com.example.data.di
 
 import com.google.firebase.database.FirebaseDatabase
 import org.koin.dsl.module
