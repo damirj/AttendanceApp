@@ -1,9 +1,9 @@
 package hr.damirjurkovic.attendance.ui.course.details.presentation
 
 import androidx.lifecycle.LiveData
-import hr.damirjurkovic.attendance.interaction.ChangeCourseUseCase
-import hr.damirjurkovic.attendance.interaction.GetCourseUseCase
-import hr.damirjurkovic.attendance.model.Course
+import com.example.domain.interaction.course.ChangeCourseUseCase
+import com.example.domain.interaction.course.GetCourseUseCase
+import com.example.domain.model.Course
 import hr.damirjurkovic.attendance.ui.base.BaseViewModel
 import hr.damirjurkovic.attendance.ui.course.details.view.CourseDetailsEffect
 import hr.damirjurkovic.attendance.ui.course.details.view.DisableAttendanceBtn

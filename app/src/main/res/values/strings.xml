@@ -49,4 +49,6 @@
     <string name="auth_failed">Authentication failed</string>
     <string name="delete_all_courses">Delete all courses</string>
     <string name="required">Required.</string>
+    <string name="password">password</string>
+    <string name="email">email</string>
 </resources>

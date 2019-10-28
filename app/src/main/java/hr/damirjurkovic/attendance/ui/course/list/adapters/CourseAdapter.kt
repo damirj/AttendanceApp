@@ -3,8 +3,8 @@ package hr.damirjurkovic.attendance.ui.course.list.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.Course
 import hr.damirjurkovic.attendance.R
-import hr.damirjurkovic.attendance.model.Course
 
 
 class CourseAdapter(private val onItemSelected: (Course) -> Unit) :

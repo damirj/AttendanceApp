@@ -2,10 +2,10 @@ package hr.damirjurkovic.attendance.ui.course.details.view.fragments
 
 import android.os.Bundle
 import android.view.View
+import com.example.domain.model.Course
 import hr.damirjurkovic.attendance.R
 import hr.damirjurkovic.attendance.common.EXTRA_COURSE_ID
 import hr.damirjurkovic.attendance.common.subscribe
-import hr.damirjurkovic.attendance.model.Course
 import hr.damirjurkovic.attendance.ui.base.BaseFragment
 import hr.damirjurkovic.attendance.ui.course.details.presentation.CourseDetailsViewModel
 import hr.damirjurkovic.attendance.ui.course.details.view.CourseDetailsEffect
